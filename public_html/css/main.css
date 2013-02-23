@@ -1,0 +1,15 @@
+* {
+    border-style: dashed;
+    border-width: 1px;
+}
+body {
+    background-color: #000000;
+}
+#stage {
+    position: relative;
+    background-color: #AAAAAA;
+    width: 800px;
+    height: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
