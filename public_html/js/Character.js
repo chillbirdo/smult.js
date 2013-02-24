@@ -1,13 +1,13 @@
-function Character() {
+function Character(elementSelector) {
     //fields
-    var element = $('#character');
+    var element = $(elementSelector);
     var characterAnimator = new CharacterAnimator(element);
     var posX = 100;
     var posY = 100;
-    var speed = 5;
-    
+    var speed = 1;
+
     //movement
-    this.moveUp = function(){
+    this.moveUp = function() {
         posY -= speed;
         updatePosition();
     }
@@ -23,7 +23,7 @@ function Character() {
         posX -= speed;
         updatePosition();
     }
-    function updatePosition(){
-        element.css( {'left':posX, 'top':posY});
+    function updatePosition() {
+        element.css({'left': posX, 'top': posY});
     }
 }
