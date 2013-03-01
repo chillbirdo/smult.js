@@ -25,7 +25,7 @@ function Character(elementSelector) {
             that.changeActivity( updateInfo.activity);
         }
         if( updateInfo.direction){
-            that.changeDirection( updateInfo.direction);
+            //that.changeDirection( updateInfo.direction);
         }
     };
     this.getDirection = function(){

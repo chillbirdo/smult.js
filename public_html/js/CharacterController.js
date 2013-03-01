@@ -3,10 +3,9 @@ function CharacterController(character) {
     this.onKeyEvent = function(keyPressed) {
         var updateInfo = new Object();
         //arrowkeys
-        console.log( keyPressed.keyCodeStr);
         if ( jQuery.inArray( keyPressed.keyCodeStr, LocalInputReader.arrowKeys)) {
             //activity: standing or walking?
-            console.log( "ARSCH" + keyPressed.type);
+            //console.log( "ARSCH" + keyPressed.type);
             if (keyPressed.type == "keyup") {
                 console.log( "keyup");
                 var stand = true;
@@ -23,7 +22,7 @@ function CharacterController(character) {
             } else {
                 if (character.getActivity() != Character.activity.WALK) {
                     //updateInfo.activity = Character.activity.WALK;
-                    console.log( "set activity walk");
+                   // console.log( "set activity walk");
                 }
             }
             //direction
@@ -52,7 +51,6 @@ function CharacterController(character) {
         //other keys
         //..
         
-        console.log( updateInfo.activity);
         character.update( updateInfo);
     };
 }
