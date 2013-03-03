@@ -16,7 +16,6 @@ function Character(elementSelector) {
         characterAnimator.changePerspective( direction);
     };
     this.changeActivity = function( act){
-        console.log( "changeactivity: " + act)
         activity = act;
         characterAnimator.changeAnimation( activity);
     };

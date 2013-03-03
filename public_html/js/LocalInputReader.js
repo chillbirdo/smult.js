@@ -1,22 +1,24 @@
 function LocalInputReader(onKeyEvent) {
 
     var keyCodeMap = {
-        37: LocalInputReader.arrowKeys[0],
-        38: LocalInputReader.arrowKeys[1],
-        39: LocalInputReader.arrowKeys[2],
-        40: LocalInputReader.arrowKeys[3]
+        37: LocalInputReader.arrowKeys.LEFTARROW,
+        38: LocalInputReader.arrowKeys.UPARROW,
+        39: LocalInputReader.arrowKeys.RIGHTARROW,
+        40: LocalInputReader.arrowKeys.DOWNARROW
         //other keys..
     };
 
     /*
-     * initialize keyPressed object
+     * initialize keyPressed mapping
+     * eg.: LocalInputReader.arrowKeys.LEFTARROW:true, ..
      */
     var keyPressed = new Object();
     keyPressed.keyCodeStr = "";
     keyPressed.type = "";
-    for( var key in LocalInputReader.keyCodeMap){
-        var val = LocalInputReader.keyCodeMap[key];
+    for (var key in keyCodeMap) {
+        var val = keyCodeMap[key];
         keyPressed[val] = false;
+        console.log(keyPressed[val]);
     }
 
     /*
@@ -30,18 +32,31 @@ function LocalInputReader(onKeyEvent) {
         event.preventDefault();
         keyPressed.keyCodeStr = keyCodeStr;
         keyPressed.type = event.type;
+
+        var samekey = false;
         if (event.type == "keydown") {
-            keyPressed[keyCodeStr] = true;
+            if (keyPressed[keyCodeStr]) {
+                samekey = true;
+            } else {
+                keyPressed[keyCodeStr] = true;
+            }
         } else if (event.type == "keyup") {
             keyPressed[keyCodeStr] = false;
         }
-        onKeyEvent( keyPressed);
+
+        if (!samekey) {
+            onKeyEvent(keyPressed);
+        }
     };
-    
+
     $('body').keydown(processInputEvent);
     $('body').keyup(processInputEvent);
 }
 
-//TODO transform to map/enum
-LocalInputReader.arrowKeys = new Array( "leftArrow", "upArrow", "rightArrow", "downArrow");
+LocalInputReader.arrowKeys = {
+    "LEFTARROW": 1,
+    "UPARROW": 2,
+    "RIGHTARROW": 3,
+    "DOWNARROW": 4
+};
 

@@ -28,7 +28,6 @@ function CharacterAnimator(characterElement, direction, activity) {
     function changeAnimationF(activity) {
         var resetObj = new Object();
         if (spriteInfo[activity].cyclic) {
-            console.log("IM HEEEERE")
             resetObj[spriteInfo[activity].last] = function(obj) {
                 obj.spSet("current_frame", spriteInfo[activity].first - 1);
             };
