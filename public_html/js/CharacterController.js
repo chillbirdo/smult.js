@@ -5,7 +5,6 @@ function CharacterController(character) {
         //arrowkeys
         if (jQuery.inArray(keyPressed.keyCodeStr, LocalInputReader.arrowKeys)) {
             //activity: standing or walking?
-            console.log("EVENT");
             if (keyPressed.type == "keyup") {
                 var stand = true;
                 for (var arrowKey in LocalInputReader.arrowKeys) {
@@ -24,28 +23,35 @@ function CharacterController(character) {
                 }
             }
 
-//            //direction
-//            if (keyPressed["upArrow"]) {
-//                if (keyPressed["leftArrow"]) {
-//                    updateInfo.direction = Character.direction.UPLEFT;
-//                } else if (keyPressed["rightArrow"]) {
-//                    updateInfo.direction = Character.direction.UPRIGHT;
-//                } else {
-//                    updateInfo.direction = Character.direction.UP;
-//                }
-//            } else if (keyPressed["downArrow"]) {
-//                if (keyPressed["leftArrow"]) {
-//                    updateInfo.direction = Character.direction.DOWNRIGHT;
-//                } else if (keyPressed["rightArrow"]) {
-//                    updateInfo.direction = Character.direction.DOWNLEFT;
-//                } else {
-//                    updateInfo.direction = Character.direction.DOWN;
-//                }
-//            } else if (keyPressed["leftArrow"]) {
-//                updateInfo.direction = Character.direction.LEFT;
-//            } else if (keyPressed["rightArrow"]) {
-//                updateInfo.direction = Character.direction.RIGHT;
-//            }
+            //direction
+            if (keyPressed[LocalInputReader.arrowKeys.UPARROW]) {
+                if (!keyPressed[LocalInputReader.arrowKeys.DOWNARROW]) {
+                    if (keyPressed[LocalInputReader.arrowKeys.LEFTARROW]) {
+                        updateInfo.direction = Character.direction.UPLEFT;
+                    } else if (keyPressed[LocalInputReader.arrowKeys.RIGHTARROW]) {
+                        updateInfo.direction = Character.direction.UPRIGHT;
+                    } else {
+                        updateInfo.direction = Character.direction.UP;
+                    }
+                }
+            } else if (keyPressed[LocalInputReader.arrowKeys.DOWNARROW]) {
+                if (keyPressed[LocalInputReader.arrowKeys.LEFTARROW]) {
+                    if (!keyPressed[LocalInputReader.arrowKeys.RIGHTARROW]){
+                        updateInfo.direction = Character.direction.DOWNLEFT;
+                    }
+                } else if (keyPressed[LocalInputReader.arrowKeys.RIGHTARROW]) {
+                    updateInfo.direction = Character.direction.DOWNRIGHT;
+                } else {
+                    updateInfo.direction = Character.direction.DOWN;
+                }
+            } else if (keyPressed[LocalInputReader.arrowKeys.LEFTARROW]) {
+                if (!keyPressed[LocalInputReader.arrowKeys.RIGHTARROW]) {
+                    updateInfo.direction = Character.direction.LEFT;
+                }
+                
+            } else if (keyPressed[LocalInputReader.arrowKeys.RIGHTARROW]) {
+                updateInfo.direction = Character.direction.RIGHT;
+            }
         }
         //other keys
         //..

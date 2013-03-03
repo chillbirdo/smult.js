@@ -69,7 +69,6 @@ function CharacterAnimator(characterElement, direction, activity) {
      * changes the character's perspective
      */
     function changePerspectiveF(perspArg) {
-        console.log("change perspective: " + perspArg);
         if (perspArg < 1 || perspArg > 8) {
             console.log("perspective out of range");
             return;
@@ -78,14 +77,12 @@ function CharacterAnimator(characterElement, direction, activity) {
         if (perspArg <= 5 && mirrored) {
             mirrored = false;
             $('#character').removeClass("mirror");
-            console.log("remove mirror");
         } else if (perspArg > 5) {
             perspective = 10 - perspArg;
             if (!mirrored) {
                 mirrored = true;
                 $('#character').addClass("mirror");
             }
-            console.log("add mirror");
         }
         spritelyObject.spState(perspective);
     }

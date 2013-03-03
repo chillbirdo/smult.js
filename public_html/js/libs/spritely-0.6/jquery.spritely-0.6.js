@@ -245,7 +245,6 @@
             return this; // so we can chain events
         },
         sprite: function(options) {
-        	console.log("inside")
             var options = $.extend({
                 type: 'sprite',
                 bounce: [0, 0, 1000] // up-down, left-right, milliseconds

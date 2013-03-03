@@ -18,7 +18,6 @@ function LocalInputReader(onKeyEvent) {
     for (var key in keyCodeMap) {
         var val = keyCodeMap[key];
         keyPressed[val] = false;
-        console.log(keyPressed[val]);
     }
 
     /*
