@@ -2,9 +2,10 @@
 (function($) {
     $(function() {
 
-        var character = new Character('#character');
-        var characterController = new CharacterController(character);
-        var localInputReader = new LocalInputReader(characterController.onKeyEvent);
-                
+        var localCharacter = new Character('#character');
+        var localCharacterController = new CharacterController(localCharacter);
+        var localInputReader = new LocalInputReader(localCharacterController.onKeyEvent);
+        
+        var game = new Game( localCharacter);
     });
 })(jQuery);

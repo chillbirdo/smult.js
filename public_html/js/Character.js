@@ -5,53 +5,70 @@ function Character(elementSelector) {
     var activity = Character.activity.STAND;
     var posX = 100;
     var posY = 100;
-    var speed = 1;
+    var speed = 3;
     var that = this;
-
     var characterAnimator = new CharacterAnimator(element, direction, activity);
-    updatePosition();
 
-    this.changeDirection = function( dir){
+    this.changeDirection = function(dir) {
         direction = dir;
-        characterAnimator.changePerspective( direction);
+        characterAnimator.changePerspective(direction);
     };
-    this.changeActivity = function( act){
+    this.changeActivity = function(act) {
         activity = act;
-        characterAnimator.changeAnimation( activity);
+        characterAnimator.changeAnimation(activity);
     };
-    this.update = function( updateInfo){
-        if( updateInfo.activity){
-            that.changeActivity( updateInfo.activity);
+    this.update = function(updateInfo) {
+        if (updateInfo.activity) {
+            that.changeActivity(updateInfo.activity);
         }
-        if( updateInfo.direction){
-            that.changeDirection( updateInfo.direction);
+        if (updateInfo.direction) {
+            that.changeDirection(updateInfo.direction);
         }
     };
-    this.getDirection = function(){
+    this.getDirection = function() {
         return direction;
     };
-    this.getActivity = function(){
+    this.getActivity = function() {
         return activity;
     };
 
-    //movement
-    this.moveUp = function() {
-        posY -= speed;
-        updatePosition();
+    this.tick = function(){
+        move();
     };
-    this.moveRight = function() {
-        posX += speed;
-        updatePosition();
-    };
-    this.moveDown = function() {
-        posY += speed;
-        updatePosition();
-    };
-    this.moveLeft = function() {
-        posX -= speed;
-        updatePosition();
-    };
-    function updatePosition() {
+
+    function move(){
+        if (activity == Character.activity.WALK) {
+            switch (direction) {
+                case Character.direction.UP:
+                    posY -= speed;
+                    break;
+                case Character.direction.UPLEFT:
+                    posY -= speed;
+                    posX -= speed;
+                    break;
+                case Character.direction.LEFT:
+                    posX -= speed;
+                    break;
+                case Character.direction.DOWNLEFT:
+                    posX -= speed;
+                    posY += speed;
+                    break;
+                case Character.direction.DOWN:
+                    posY += speed;
+                    break;
+                case Character.direction.DOWNRIGHT:
+                    posY += speed;
+                    posX += speed;
+                    break;
+                case Character.direction.RIGHT:
+                    posX += speed;
+                    break;
+                case Character.direction.UPRIGHT:
+                    posX += speed;
+                    posY -= speed;
+                    break;
+            }
+        }
         element.css({'left': posX, 'top': posY});
     }
 }
@@ -68,11 +85,11 @@ Character.direction = {
 };
 
 Character.activity = {
-    "WALK" : 1,
-    "STAND" : 2,
-    "BORED" : 3,
-    "TAKE" : 4,
-    "TAKEFROMGROUND" : 5,
-    "HADOUKEN" : 6,
-    "CHEER" : 7
+    "WALK": 1,
+    "STAND": 2,
+    "BORED": 3,
+    "TAKE": 4,
+    "TAKEFROMGROUND": 5,
+    "HADOUKEN": 6,
+    "CHEER": 7
 };

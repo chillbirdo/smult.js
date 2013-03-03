@@ -2,12 +2,15 @@
     border-style: dashed;
     border-width: 1px;
 }
+#character {
+    border-style: none;
+}
 body {
     background-color: #000000;
 }
 #stage {
     position: relative;
-    background-color: #AAAAAA;
+    background-color: #000000;
     width: 800px;
     height: 600px;
     margin-left: auto;

@@ -1,0 +1,6 @@
+
+-   CharacterAnimator: 
+          add a property to the property table that defines how long (in ms)
+          the last frame should last on noncyclic animations.
+
+-   Abstract activities from animations
