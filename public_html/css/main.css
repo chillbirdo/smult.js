@@ -1,10 +1,22 @@
+/*
 * {
     border-style: dashed;
     border-width: 1px;
 }
+*/
 #character {
     border-style: none;
 }
+.arraowkeys{
+    position: absolute;
+    opacity: 0.5;
+    margin-left:auto;
+    margin-right: auto;
+    bottom: 0;
+    width: 20%;
+    height: 20%;
+}
+
 body {
     background-color: #000000;
 }
