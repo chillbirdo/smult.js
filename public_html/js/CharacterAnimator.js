@@ -1,6 +1,8 @@
-function CharacterAnimator(characterElement, direction, activity) {
+function CharacterAnimator(characterArg, characterElementArg) {
     //private
-    var characterElement = characterElement;
+    var that = this;
+    var character = characterArg;
+    var characterElement = characterElementArg;
     var spritelyObject;
     var mirrored = false;
     var spriteInfo = {
@@ -15,17 +17,40 @@ function CharacterAnimator(characterElement, direction, activity) {
     var init = true;
     var nonCyclicForewardAnimation = true;
 
-    changeAnimationF(activity);
-    changePerspectiveF(direction);
+    changeActivity(character.getActivity());
+    changeDirection(character.getDirection());
 
     //public
-    this.changeAnimation = changeAnimationF;
-    this.changePerspective = changePerspectiveF;
+    this.update = function(updateInfo) {
+        if (updateInfo.activity) {
+            changeActivity(updateInfo.activity);
+        }
+        if (updateInfo.direction) {
+            changeDirection(updateInfo.direction);
+        }
+        if (updateInfo.posX){
+            changePositionX( updateInfo.posX);
+        }
+        if (updateInfo.posY){
+            changePositionY( updateInfo.posY);
+        }
+    };
+
+    /*
+     * changes the character's position
+     */
+    function changePositionX( posX) {
+        characterElement.css({'left': posX});
+    }
+
+    function changePositionY( posY) {
+        characterElement.css({'top': posY});
+    }
 
     /*
      * changes the character's animation
      */
-    function changeAnimationF(activity) {
+    function changeActivity(activity) {
         var resetObj = new Object();
         if (spriteInfo[activity].cyclic) {
             resetObj[spriteInfo[activity].last] = function(obj) {
@@ -58,17 +83,17 @@ function CharacterAnimator(characterElement, direction, activity) {
             }).spState(Character.direction.DOWN).active();
             init = false;
         } else {
-            spritelyObject.spSet( "fps", spriteInfo[activity].fps);
-            spritelyObject.spSet( "current_frame", spriteInfo[activity].first);
-            spritelyObject.spSet( "on_frame", resetObj);
-            spritelyObject.spSet( "rewind", false);
+            spritelyObject.spSet("fps", spriteInfo[activity].fps);
+            spritelyObject.spSet("current_frame", spriteInfo[activity].first);
+            spritelyObject.spSet("on_frame", resetObj);
+            spritelyObject.spSet("rewind", false);
         }
     }
 
     /*
      * changes the character's perspective
      */
-    function changePerspectiveF(perspArg) {
+    function changeDirection(perspArg) {
         if (perspArg < 1 || perspArg > 8) {
             console.log("perspective out of range");
             return;

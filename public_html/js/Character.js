@@ -1,75 +1,40 @@
-function Character(elementSelector) {
+function Character() {
     //fields
-    var element = $(elementSelector);
     var direction = Character.direction.UPRIGHT;
     var activity = Character.activity.STAND;
     var posX = 100;
     var posY = 100;
     var speed = 3;
-    var that = this;
-    var characterAnimator = new CharacterAnimator(element, direction, activity);
 
-    this.changeDirection = function(dir) {
-        direction = dir;
-        characterAnimator.changePerspective(direction);
-    };
-    this.changeActivity = function(act) {
-        activity = act;
-        characterAnimator.changeAnimation(activity);
-    };
     this.update = function(updateInfo) {
         if (updateInfo.activity) {
-            that.changeActivity(updateInfo.activity);
+            activity = updateInfo.activity;
         }
         if (updateInfo.direction) {
-            that.changeDirection(updateInfo.direction);
+            direction = updateInfo.direction;
+        }
+        if (updateInfo.posX){
+            posX = updateInfo.posX;
+        }
+        if (updateInfo.posY){
+            posY = updateInfo.posY;
         }
     };
+    
     this.getDirection = function() {
         return direction;
     };
     this.getActivity = function() {
         return activity;
     };
-
-    this.tick = function(){
-        move();
-    };
-
-    function move(){
-        if (activity == Character.activity.WALK) {
-            switch (direction) {
-                case Character.direction.UP:
-                    posY -= speed;
-                    break;
-                case Character.direction.UPLEFT:
-                    posY -= speed;
-                    posX -= speed;
-                    break;
-                case Character.direction.LEFT:
-                    posX -= speed;
-                    break;
-                case Character.direction.DOWNLEFT:
-                    posX -= speed;
-                    posY += speed;
-                    break;
-                case Character.direction.DOWN:
-                    posY += speed;
-                    break;
-                case Character.direction.DOWNRIGHT:
-                    posY += speed;
-                    posX += speed;
-                    break;
-                case Character.direction.RIGHT:
-                    posX += speed;
-                    break;
-                case Character.direction.UPRIGHT:
-                    posX += speed;
-                    posY -= speed;
-                    break;
-            }
-        }
-        element.css({'left': posX, 'top': posY});
+    this.getPosX = function() {
+        return posX;
+    }
+    this.getPosY = function() {
+        return posY;
+    }
+    this.getSpeed = function() {
+        return speed;
     }
 }
 

@@ -1,4 +1,4 @@
-function Game( localCharacter) {
+function Game( localCharacterController) {
     
-    setInterval( localCharacter.tick, 10);
+    setInterval( localCharacterController.changePosition, 10);
 }
