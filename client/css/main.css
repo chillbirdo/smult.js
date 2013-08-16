@@ -1,0 +1,30 @@
+/*
+* {
+    border-style: dashed;
+    border-width: 1px;
+}
+*/
+#character {
+    border-style: none;
+}
+.arraowkeys{
+    position: absolute;
+    opacity: 0.5;
+    margin-left:auto;
+    margin-right: auto;
+    bottom: 0;
+    width: 20%;
+    height: 20%;
+}
+
+body {
+    background-color: #000000;
+}
+#stage {
+    position: relative;
+    background-color: #000000;
+    width: 800px;
+    height: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
