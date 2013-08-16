@@ -1,7 +1,8 @@
-function LocalCharacterController(characterArg, characterAnimatorArg) {
+function LocalCharacterController(playerArg) {
 
-    var character = characterArg;
-    var characterAnimator = characterAnimatorArg;
+    var id = 'local';
+    var player = playerArg;
+    player.init(id);
 
     /*
      * reacts on data from LocalInputReader and changes states of character and characterAnimator
@@ -21,11 +22,11 @@ function LocalCharacterController(characterArg, characterAnimatorArg) {
                     }
                 }
                 if (stand) {
-                    updateInfo.activity = Character.activity.STAND;
+                    updateInfo.activity = Player.activity.STAND;
                 }
             } else {
-                if (character.getActivity() != Character.activity.WALK) {
-                    updateInfo.activity = Character.activity.WALK;
+                if (player.getActivity() != Player.activity.WALK) {
+                    updateInfo.activity = Player.activity.WALK;
                 }
             }
 
@@ -33,37 +34,36 @@ function LocalCharacterController(characterArg, characterAnimatorArg) {
             if (keyPressed[LocalInputReader.arrowKeys.UPARROW]) {
                 if (!keyPressed[LocalInputReader.arrowKeys.DOWNARROW]) {
                     if (keyPressed[LocalInputReader.arrowKeys.LEFTARROW]) {
-                        updateInfo.direction = Character.direction.UPLEFT;
+                        updateInfo.direction = Player.direction.UPLEFT;
                     } else if (keyPressed[LocalInputReader.arrowKeys.RIGHTARROW]) {
-                        updateInfo.direction = Character.direction.UPRIGHT;
+                        updateInfo.direction = Player.direction.UPRIGHT;
                     } else {
-                        updateInfo.direction = Character.direction.UP;
+                        updateInfo.direction = Player.direction.UP;
                     }
                 }
             } else if (keyPressed[LocalInputReader.arrowKeys.DOWNARROW]) {
                 if (keyPressed[LocalInputReader.arrowKeys.LEFTARROW]) {
                     if (!keyPressed[LocalInputReader.arrowKeys.RIGHTARROW]) {
-                        updateInfo.direction = Character.direction.DOWNLEFT;
+                        updateInfo.direction = Player.direction.DOWNLEFT;
                     }
                 } else if (keyPressed[LocalInputReader.arrowKeys.RIGHTARROW]) {
-                    updateInfo.direction = Character.direction.DOWNRIGHT;
+                    updateInfo.direction = Player.direction.DOWNRIGHT;
                 } else {
-                    updateInfo.direction = Character.direction.DOWN;
+                    updateInfo.direction = Player.direction.DOWN;
                 }
             } else if (keyPressed[LocalInputReader.arrowKeys.LEFTARROW]) {
                 if (!keyPressed[LocalInputReader.arrowKeys.RIGHTARROW]) {
-                    updateInfo.direction = Character.direction.LEFT;
+                    updateInfo.direction = Player.direction.LEFT;
                 }
 
             } else if (keyPressed[LocalInputReader.arrowKeys.RIGHTARROW]) {
-                updateInfo.direction = Character.direction.RIGHT;
+                updateInfo.direction = Player.direction.RIGHT;
             }
         }
         //other keys
         //..
 
-        character.update(updateInfo);
-        characterAnimator.update(updateInfo);
+        player.update(updateInfo);
     };
 
     /*
@@ -71,40 +71,39 @@ function LocalCharacterController(characterArg, characterAnimatorArg) {
      * this function is called on every tick
      */
     this.changePosition = function() {
-        if (character.getActivity() == Character.activity.WALK) {
+        if (player.getActivity() == Player.activity.WALK) {
             var updateInfo = {};
-            switch (character.getDirection()) {
-                case Character.direction.UP:
-                    updateInfo.posY = character.getPosY() - character.getSpeed();
+            switch (player.getDirection()) {
+                case Player.direction.UP:
+                    updateInfo.posY = player.getPosY() - player.getSpeed();
                     break;
-                case Character.direction.UPLEFT:
-                    updateInfo.posY = character.getPosY() - character.getSpeed();
-                    updateInfo.posX = character.getPosX() - character.getSpeed();
+                case Player.direction.UPLEFT:
+                    updateInfo.posY = player.getPosY() - player.getSpeed();
+                    updateInfo.posX = player.getPosX() - player.getSpeed();
                     break;
-                case Character.direction.LEFT:
-                    updateInfo.posX = character.getPosX() - character.getSpeed();
+                case Player.direction.LEFT:
+                    updateInfo.posX = player.getPosX() - player.getSpeed();
                     break;
-                case Character.direction.DOWNLEFT:
-                    updateInfo.posX = character.getPosX() - character.getSpeed();
-                    updateInfo.posY = character.getPosY() + character.getSpeed();
+                case Player.direction.DOWNLEFT:
+                    updateInfo.posX = player.getPosX() - player.getSpeed();
+                    updateInfo.posY = player.getPosY() + player.getSpeed();
                     break;
-                case Character.direction.DOWN:
-                    updateInfo.posY = character.getPosY() + character.getSpeed();
+                case Player.direction.DOWN:
+                    updateInfo.posY = player.getPosY() + player.getSpeed();
                     break;
-                case Character.direction.DOWNRIGHT:
-                    updateInfo.posY = character.getPosY() + character.getSpeed();
-                    updateInfo.posX = character.getPosX() + character.getSpeed();
+                case Player.direction.DOWNRIGHT:
+                    updateInfo.posY = player.getPosY() + player.getSpeed();
+                    updateInfo.posX = player.getPosX() + player.getSpeed();
                     break;
-                case Character.direction.RIGHT:
-                    updateInfo.posX = character.getPosX() + character.getSpeed();
+                case Player.direction.RIGHT:
+                    updateInfo.posX = player.getPosX() + player.getSpeed();
                     break;
-                case Character.direction.UPRIGHT:
-                    updateInfo.posX = character.getPosX() + character.getSpeed();
-                    updateInfo.posY = character.getPosY() - character.getSpeed();
+                case Player.direction.UPRIGHT:
+                    updateInfo.posX = player.getPosX() + player.getSpeed();
+                    updateInfo.posY = player.getPosY() - player.getSpeed();
                     break;
             }
-            character.update(updateInfo);
-            characterAnimator.update(updateInfo);
+            player.update(updateInfo);
         }
     }
 }

@@ -1,8 +1,8 @@
-#character {
+.character {
     background: transparent url(../img/davie-boy.png) 0 0 no-repeat;
     position: relative;
-    left: 100;
-    top: 100;
+/*    left: 100;
+    top: 100;*/
     width: 150px;
     height: 250px;
 }

@@ -1,8 +1,6 @@
-function CharacterAnimator(characterArg, characterElementArg) {
+function CharacterAnimator(initialPlayerInfo) {
     //private
     var that = this;
-    var character = characterArg;
-    var characterElement = characterElementArg;
     var spritelyObject;
     var mirrored = false;
     var spriteInfo = {
@@ -17,8 +15,7 @@ function CharacterAnimator(characterArg, characterElementArg) {
     var init = true;
     var nonCyclicForewardAnimation = true;
 
-    changeActivity(character.getActivity());
-    changeDirection(character.getDirection());
+    var characterElement = initCharacterElement(initialPlayerInfo.id);
 
     //public
     this.update = function(updateInfo) {
@@ -28,22 +25,24 @@ function CharacterAnimator(characterArg, characterElementArg) {
         if (updateInfo.direction) {
             changeDirection(updateInfo.direction);
         }
-        if (updateInfo.posX){
-            changePositionX( updateInfo.posX);
+        if (updateInfo.posX) {
+            changePositionX(updateInfo.posX);
         }
-        if (updateInfo.posY){
-            changePositionY( updateInfo.posY);
+        if (updateInfo.posY) {
+            changePositionY(updateInfo.posY);
         }
     };
+    //update with initial values
+    this.update( initialPlayerInfo);
 
     /*
      * changes the character's position
      */
-    function changePositionX( posX) {
+    function changePositionX(posX) {
         characterElement.css({'left': posX});
     }
 
-    function changePositionY( posY) {
+    function changePositionY(posY) {
         characterElement.css({'top': posY});
     }
 
@@ -80,7 +79,7 @@ function CharacterAnimator(characterArg, characterElementArg) {
                 no_of_frames: 21,
                 start_at_frame: spriteInfo[activity].first,
                 on_frame: resetObj
-            }).spState(Character.direction.DOWN).active();
+            }).spState(Player.direction.DOWN).active();
             init = false;
         } else {
             spritelyObject.spSet("fps", spriteInfo[activity].fps);
@@ -101,14 +100,24 @@ function CharacterAnimator(characterArg, characterElementArg) {
         var perspective = perspArg;
         if (perspArg <= 5 && mirrored) {
             mirrored = false;
-            $('#character').removeClass("mirror");
+            characterElement.removeClass("mirror");
         } else if (perspArg > 5) {
             perspective = 10 - perspArg;
             if (!mirrored) {
                 mirrored = true;
-                $('#character').addClass("mirror");
+                characterElement.addClass("mirror");
             }
         }
         spritelyObject.spState(perspective);
+    }
+
+    /*
+     * init CSS properties
+     */
+    function initCharacterElement(id) {
+        var elementId = 'character_' + id;
+        $('#stage').append('<div id="' + elementId + '" class="character"/>');
+        var characterElement = $('#' + elementId);
+        return characterElement;
     }
 }
