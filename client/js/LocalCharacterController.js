@@ -2,7 +2,17 @@ function LocalCharacterController(playerArg) {
 
     var id = 'local';
     var player = playerArg;
-    player.init(id);
+    var sendUpdate; /*pointer to remote-push function*/
+
+    /*this is ugly*/
+    setInterval(changePosition, 10); /*if activity is WALK, update position every TICK_DELAY_MS*/
+
+    /*
+     * Sockethandler calls that function 
+     */
+    this.setSendUpdateFunc = function(setSendUpdateFunc) {
+        sendUpdate = setSendUpdateFunc;
+    }
 
     /*
      * reacts on data from LocalInputReader and changes states of character and characterAnimator
@@ -63,14 +73,14 @@ function LocalCharacterController(playerArg) {
         //other keys
         //..
 
-        player.update(updateInfo);
+        updateAll(updateInfo);
     };
 
     /*
      * changes position of local character depending on its activity, direction and speed
      * this function is called on every tick
      */
-    this.changePosition = function() {
+    function changePosition() {
         if (player.getActivity() == Player.activity.WALK) {
             var updateInfo = {};
             switch (player.getDirection()) {
@@ -103,7 +113,14 @@ function LocalCharacterController(playerArg) {
                     updateInfo.posY = player.getPosY() - player.getSpeed();
                     break;
             }
-            player.update(updateInfo);
+            updateAll(updateInfo);
+        }
+    }
+
+    function updateAll(updateInfo) {
+        player.update(updateInfo);
+        if (sendUpdate) {
+            sendUpdate(updateInfo);
         }
     }
 }

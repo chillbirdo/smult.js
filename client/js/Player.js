@@ -1,20 +1,22 @@
-function Player() {
-    
-    var updatablePlayerInfo = {
-        direction : Player.direction.UPRIGHT,
-                activity : Player.activity.STAND,
-                posX : 100,
-                posY : 100,
-                speed : 3
-    };
-    
+function Player(remotePlayerInfo) {
+
+    var updatablePlayerInfo;
     var characterAnimator;
-    
-    this.init = function( id){
-        updatablePlayerInfo.id = id;
-        characterAnimator = new CharacterAnimator(updatablePlayerInfo);
-//        characterAnimator.update({activity: updatablePlayerInfo.activity, direction: updatablePlayerInfo.direction});
-    };
+
+    if (!remotePlayerInfo) {
+        updatablePlayerInfo = {
+            id: 'local',
+            direction: Player.direction.UPRIGHT,
+            activity: Player.activity.STAND,
+            posX: 100,
+            posY: 100,
+            speed: 3
+        };
+    } else {
+        updatablePlayerInfo = remotePlayerInfo;
+    }
+
+    characterAnimator = new CharacterAnimator(updatablePlayerInfo);
 
 
     this.update = function(updatePlayerInfo) {
@@ -47,6 +49,12 @@ function Player() {
     }
     this.getSpeed = function() {
         return updatablePlayerInfo.speed;
+    }
+    this.getId = function(){
+        return updatablePlayerInfo.id;
+    }
+    this.getUpdatablePlayerInfo = function(){
+        return updatablePlayerInfo;
     }
 }
 
