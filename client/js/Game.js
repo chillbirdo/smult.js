@@ -14,6 +14,7 @@ function Game() {
     }
 
     this.addRemotePlayer = function(remotePlayerInfo) {
+        console.log( "game: adding new player x: " + remotePlayerInfo.posX + " y: " + remotePlayerInfo.posY);
         remotePlayers.push( new Player(remotePlayerInfo));
     };
 

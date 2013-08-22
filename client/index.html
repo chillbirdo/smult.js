@@ -2,7 +2,7 @@
     <head>
         <script src="js/libs/jquery-1.8.2/jquery-1.8.2.min.js" type="text/javascript"></script>
         <script src="js/libs/spritely-0.6/jquery.spritely-0.6.js" type="text/javascript"></script>
-        
+
         <script src="http://localhost:3000/socket.io/socket.io.js" type="text/javascript"></script>
 
         <script src="js/CharacterAnimator.js" type="text/javascript"></script>
@@ -12,15 +12,20 @@
         <script src="js/Game.js" type="text/javascript"></script>
         <script src="js/SocketHandler.js" type="text/javascript"></script>
         <script src="js/main.js" type="text/javascript"></script>
- 
+
         <link rel="stylesheet" type="text/css" href="css/main.css"/>
         <link rel="stylesheet" type="text/css" href="css/character.css"/>
     </head>
     <body>
         <div id="stage">
             <!-- characterAnimator adds characters here -->
-            <img class="arraowkeys" src="img/arrowkeys.png" alt="use the arrowkeys to move your the avatar">
+            <!--<img class="arraowkeys" src="img/arrowkeys.png" alt="use the arrowkeys to move your the avatar">-->
+
+            <button style="position: absolute; top: 0; left: 0; border: 0;     width: 20%;
+                    height: 20%;
+                    " id="sendmessage" name="sendmessage"/>
+
         </div>
-        <a href="https://github.com/gilbertfritz/smult.js"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+        <!--        <a href="https://github.com/gilbertfritz/smult.js"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>-->
     </body>
 </html>
