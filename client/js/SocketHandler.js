@@ -1,7 +1,7 @@
 function SocketHandler(address, gameArg) {
 
-//    var socket = io.connect('http://localhost:3000');
-    var socket = io.connect('http://smultjs.eu01.aws.af.cm/');
+    var socket = io.connect('http://localhost:3000');
+//    var socket = io.connect('http://smultjs.eu01.aws.af.cm/');
     var game = gameArg;
 
     socket.on('connect', function() {
@@ -18,13 +18,14 @@ function SocketHandler(address, gameArg) {
                 console.log(player.id);
                 game.addRemotePlayer(player);
             });
-            socket.emit('init_response', {newPlayerInfo: game.getLocalPlayer().getUpdatablePlayerInfo()});
+            /*ugly*/
+            socket.emit('init_response', {newPlayerInfo: game.getLocalCharacterController().getPlayer().getUpdatablePlayerInfo()});
         });
 
         socket.on('new_player_connected', function(data) {
             var newPlayerId = data.newPlayerInfo.id;
-            for (var remotePlayer in game.getRemotePlayers()) {
-                if (remotePlayer.getUpdatablePlayerInfo().id == newPlayerId) {
+            for (var remoteController in game.getRemoteCharacterControllers()) {
+                if (remoteController.getPlayer().getId() == newPlayerId) {
                     return;
                 }
             }
@@ -32,10 +33,10 @@ function SocketHandler(address, gameArg) {
         });
 
         socket.on('update_to_client', function(data) {
-            var remotePlayers = game.getRemotePlayers();
-            for (i = 0; i < remotePlayers.length; i++) {
-                if (remotePlayers[i].getId() == data.playerInfo.id) {
-                    remotePlayers[i].update(data.playerInfo);
+            var remoteControllers = game.getRemoteCharacterControllers();
+            for (i = 0; i < remoteControllers.length; i++) {
+                if (remoteControllers[i].getPlayer().getId() == data.playerInfo.id) {
+                    remoteControllers[i].getPlayer().update(data.playerInfo);
                 }
             }
         });
@@ -47,7 +48,7 @@ function SocketHandler(address, gameArg) {
     });
 
     function sendUpdateToServer(playerInfo) {
-        socket.emit("update_from_client", {playerInfo: playerInfo});
+        socket.emit("update_to_server", {playerInfo: playerInfo});
     }
 
     $('#sendmessage').click(function() {

@@ -21,7 +21,7 @@ io.sockets.on('connection', function(client) {
         client.broadcast.emit('new_player_connected', {newPlayerInfo: data.newPlayerInfo});
     });
 
-    client.on('update_from_client', function(data) {
+    client.on('update_to_server', function(data) {
         data.playerInfo.id = client.id;
         client.broadcast.emit('update_to_client', {playerInfo: data.playerInfo});
         for (i = 0; i < remotePlayers.length; i++) {
