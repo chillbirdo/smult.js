@@ -26,7 +26,6 @@ io.sockets.on('connection', function(client) {
         client.broadcast.emit('update_to_client', {playerInfo: data.playerInfo});
         for (i = 0; i < remotePlayers.length; i++) {
             if (remotePlayers[i].id == client.id) {
-                console.log("UPDATING!!!");
                 if (data.playerInfo.posX) {
                     remotePlayers[i].posX = data.playerInfo.posX;
                 }
@@ -42,8 +41,6 @@ io.sockets.on('connection', function(client) {
                 break;
             }
         }
-        console.log("getting update from client: " + client.id);
-        printPlayerDataArray(remotePlayers);
     });
 
     client.on('message', function(message) {

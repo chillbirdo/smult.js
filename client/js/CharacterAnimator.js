@@ -50,7 +50,7 @@ function CharacterAnimator(initialPlayerInfo) {
     }
 
     function changePositionY(posY) {
-        characterElement.css({'top': posY});
+        characterElement.css({'top': posY, 'z-index': posY});
     }
 
     /*
