@@ -34,6 +34,13 @@ function Player(remotePlayerInfo) {
             updatablePlayerInfo.posY = updatePlayerInfo.posY;
         }
     };
+    
+    /*
+     * this is called when the player disconnects
+     */
+    this.disappear = function(){
+        characterAnimator.removeCharacterElement();
+    };
 
     this.getDirection = function() {
         return updatablePlayerInfo.direction;

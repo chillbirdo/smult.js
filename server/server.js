@@ -1,31 +1,5 @@
 var io = require('socket.io').listen(3000);
 
-//var remotePlayers = [];
-//io.disable('heartbeats');
-////io.set('log level', 1);
-//io.sockets.on('connection', function(client) {
-//    //init_request: send all players to new client
-//    client.emit('init_request', {playerInfoArray: remotePlayers});
-//    //init_response: player sent his information
-//    client.on('init_response', function(initialPlayerInfo){
-//        initialPlayerInfo.id = client.id;
-//        remotePlayers.push(initialPlayerInfo);
-//        io.sockets.emit('new_player_connected', initialPlayerInfo);
-//    });
-//
-////
-////    client.on('message', function(message){
-////        var msg = { message: [client.id, message] };
-////        playerInfo.push(msg);
-////        if (playerInfo.length > 15) playerInfo.shift();
-////        io.sockets.emit('message', msg);
-////    });
-////
-////    client.on('disconnect', function(){
-////        io.sockets.emit('announcement', client.id + ' disconnected');
-////    });
-//});
-
 var remotePlayers = [];
 io.set('log level', 1);
 io.sockets.on('connection', function(client) {
@@ -43,12 +17,34 @@ io.sockets.on('connection', function(client) {
         remotePlayers.push(data.newPlayerInfo);
 
         console.log("players: ");
-        remotePlayers.forEach(function(player) {
-            console.log(player.id);
-        });
+        printPlayerDataArray(remotePlayers);
         client.broadcast.emit('new_player_connected', {newPlayerInfo: data.newPlayerInfo});
     });
 
+    client.on('update_from_client', function(data) {
+        data.playerInfo.id = client.id;
+        client.broadcast.emit('update_to_client', {playerInfo: data.playerInfo});
+        for (i = 0; i < remotePlayers.length; i++) {
+            if (remotePlayers[i].id == client.id) {
+                console.log("UPDATING!!!");
+                if (data.playerInfo.posX) {
+                    remotePlayers[i].posX = data.playerInfo.posX;
+                }
+                if (data.playerInfo.posY) {
+                    remotePlayers[i].posY = data.playerInfo.posY;
+                }
+                if (data.playerInfo.direction) {
+                    remotePlayers[i].direction = data.playerInfo.direction;
+                }
+                if (data.playerInfo.activity) {
+                    remotePlayers[i].activity = data.playerInfo.activity;
+                }
+                break;
+            }
+        }
+        console.log("getting update from client: " + client.id);
+        printPlayerDataArray(remotePlayers);
+    });
 
     client.on('message', function(message) {
         console.log(">>>>> received message from client " + client.id);
@@ -64,21 +60,19 @@ io.sockets.on('connection', function(client) {
                 console.log("removed id " + client.id);
             }
         }
-        console.log("players: ");
-        remotePlayers.forEach(function(player) {
-            console.log(player.id);
-        });
+        printPlayerDataArray(remotePlayers);
 
-
-        io.sockets.emit('message', {msg: client.id + ' disconnected'});
-        console.log(">>>>> emitted announcement to all clients");
+        io.sockets.emit('player_disconnected', {id: client.id});
+        console.log(">>>>> emitted player_disconnect to all clients");
     });
 });
 
 function printPlayerDataArray(playerDataArray) {
     var i = 0;
+    console.log("players: ");
+
     playerDataArray.forEach(function(player) {
-        console.log(i + " : id=" + player.id + "; posX=" + player.posX + "; posY=" + player.posY + "; direction=" + player.direction + "; action=" + player.action + ";");
+        console.log(i + " : id=" + player.id + "; posX=" + player.posX + "; posY=" + player.posY + "; direction=" + player.direction + "; action=" + player.activity + ";");
         i++;
     });
 }

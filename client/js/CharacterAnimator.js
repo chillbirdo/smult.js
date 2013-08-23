@@ -15,7 +15,7 @@ function CharacterAnimator(initialPlayerInfo) {
     var init = true;
     var nonCyclicForewardAnimation = true;
 
-    var characterElement = initCharacterElement(initialPlayerInfo.id);
+    var characterElement = createCharacterElement(initialPlayerInfo.id);
 
     //public
     this.update = function(updateInfo) {
@@ -33,7 +33,14 @@ function CharacterAnimator(initialPlayerInfo) {
         }
     };
     //update with initial values
-    this.update( initialPlayerInfo);
+    this.update(initialPlayerInfo);
+
+    /*
+     * remove player's characterElement. this is called on a disconnect.
+     */
+    this.removeCharacterElement = function() {
+        characterElement.remove();
+    }
 
     /*
      * changes the character's position
@@ -114,7 +121,7 @@ function CharacterAnimator(initialPlayerInfo) {
     /*
      * init CSS properties
      */
-    function initCharacterElement(id) {
+    function createCharacterElement(id) {
         var elementId = 'character_' + id;
         $('#stage').append('<div id="' + elementId + '" class="character"/>');
         var characterElement = $('#' + elementId);
