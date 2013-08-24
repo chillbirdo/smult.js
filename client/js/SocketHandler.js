@@ -15,6 +15,12 @@ function SocketHandler(address, gameArg) {
             game.setSendUpdateFunc(sendUpdateToServer);
             console.log("got remotePlayers data! these players are on the server: ");
             data.remotePlayers.forEach(function(player) {
+                for (i = 0; i < game.getRemoteCharacterControllers().length; i++) {
+                    if (game.getRemoteCharacterControllers()[i].getPlayer().getId() == player.id) {
+                        console.log("UNEXPECTED: wanted to add player that already existed!");
+                        return;
+                    }
+                }
                 console.log(player.id);
                 game.addRemotePlayer(player);
             });
@@ -23,12 +29,6 @@ function SocketHandler(address, gameArg) {
         });
 
         socket.on('new_player_connected', function(data) {
-            var newPlayerId = data.newPlayerInfo.id;
-            for (var remoteController in game.getRemoteCharacterControllers()) {
-                if (remoteController.getPlayer().getId() == newPlayerId) {
-                    return;
-                }
-            }
             game.addRemotePlayer(data.newPlayerInfo);
         });
 

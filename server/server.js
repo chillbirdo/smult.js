@@ -2,6 +2,8 @@ var io = require('socket.io').listen(3000);
 
 var remotePlayers = [];
 io.set('log level', 1);
+io.set('heartbeat timeout', 6);
+io.set('heartbeat interval', 3);
 io.sockets.on('connection', function(client) {
 
     console.log(">>>>> Client connected: " + client.id);
@@ -13,6 +15,12 @@ io.sockets.on('connection', function(client) {
     console.log(">>>>> emitted message to all clients except sender");
 
     client.on('init_response', function(data) {
+        for (i = 0; i < remotePlayers.length; i++) {
+            if (remotePlayers[i].id == client.id) {
+                console.log("UNEXPECTED: wanted to add player that already existed!");
+                return;
+            }
+        }
         data.newPlayerInfo.id = client.id;
         remotePlayers.push(data.newPlayerInfo);
 
