@@ -5,7 +5,7 @@ function Game() {
     var localPlayer = new Player();
     var localCharacterController = new LocalCharacterController(localPlayer);
     var localInputReader = new LocalInputReader(localCharacterController.onKeyEvent);
-    var remoteCharacterControllers = [];
+    var remoteCharacterControllers = {};
 
     localCharacterController.startTicking(TICK_DELAY_MS);
 
@@ -13,26 +13,20 @@ function Game() {
         localCharacterController.setSendUpdateFunc(sendUpdateFunc);
     }
 
-    this.addRemotePlayer = function(remotePlayerInfo) {
-        console.log("game: adding new player x: " + remotePlayerInfo.posX + " y: " + remotePlayerInfo.posY);
-        var remotePlayer = new Player(remotePlayerInfo);
+    this.addRemotePlayer = function(remotePlayerId, remoteUpdatablePlayerInfo) {
+        console.log("game: adding new player " + remotePlayerId);
+        var remotePlayer = new Player(remotePlayerId, remoteUpdatablePlayerInfo);
         var remoteCharacterController = new RemoteCharacterController(remotePlayer);
-        remoteCharacterControllers.push(remoteCharacterController);
-        remoteCharacterController.startTicking(TICK_DELAY_MS);
+        remoteCharacterControllers[remotePlayerId] = remoteCharacterController;
+        remoteCharacterControllers[remotePlayerId].startTicking(TICK_DELAY_MS);
+        printRemotePlayers();
     };
 
-    this.removeRemotePlayer = function(id) {
-        console.log("game: try to remove player " + id);
-
-        for (i = remoteCharacterControllers.length - 1; i >= 0; i--) {/*iterate in reverse to splice while iterating*/
-            console.log(remoteCharacterControllers[i].getPlayer().getId());
-            if (remoteCharacterControllers[i].getPlayer().getId() == id) {
-                remoteCharacterControllers[i].getPlayer().disappear();
-                remoteCharacterControllers[i].stopTicking();
-                remoteCharacterControllers.splice(i, 1);
-                console.log("game: removed player");
-            }
-        }
+    this.removeRemotePlayer = function(remotePlayerId) {
+        remoteCharacterControllers[remotePlayerId].getPlayer().disappear();
+        remoteCharacterControllers[remotePlayerId].stopTicking();
+        delete remoteCharacterControllers[remotePlayerId];
+        console.log("game: removed player " + remotePlayerId);
     };
 
     this.getLocalCharacterController = function() {
@@ -46,10 +40,9 @@ function Game() {
     function printRemotePlayers() {
         var i = 0;
         console.log("players: ");
-        remoteCharacterControllers.forEach(function(controller) {
-            var player = controller.getPlayer();
-            console.log(i + " : id=" + player.getId() + "; posX=" + player.getPosX() + "; posY=" + player.getPosY() + "; direction=" + player.getDirection() + "; action=" + player.getActivity() + ";");
-            i++;
-        });
+        for (var id in remoteCharacterControllers) {
+            var player = remoteCharacterControllers[id].getPlayer();
+            console.log("id=" + id + "; posX=" + player.getPosX() + "; posY=" + player.getPosY() + "; direction=" + player.getDirection() + "; action=" + player.getActivity() + ";");
+        }
     }
 }

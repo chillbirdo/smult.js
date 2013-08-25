@@ -18,11 +18,11 @@
 }
 
 body {
-    background-color: #000000;
+    background-color: #FFFFFF;
 }
 #stage {
     position: relative;
-    background-color: #000000;
+    background-color: #FFFFFF;
     width: 800px;
     height: 600px;
     margin-left: auto;

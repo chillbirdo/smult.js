@@ -1,11 +1,12 @@
-function Player(remotePlayerInfo) {
+function Player(remotePlayerId, remoteUpdatablePlayerInfo) {
 
+    var id;
     var updatablePlayerInfo;
     var characterAnimator;
 
-    if (!remotePlayerInfo) {
+    if (!remoteUpdatablePlayerInfo || !remotePlayerId) {
+        id = 'local';
         updatablePlayerInfo = {
-            id: 'local',
             direction: Player.direction.UPRIGHT,
             activity: Player.activity.STAND,
             posX: 100,
@@ -13,10 +14,11 @@ function Player(remotePlayerInfo) {
             speed: 3
         };
     } else {
-        updatablePlayerInfo = remotePlayerInfo;
+        id = remotePlayerId;
+        updatablePlayerInfo = remoteUpdatablePlayerInfo;
     }
 
-    characterAnimator = new CharacterAnimator(updatablePlayerInfo);
+    characterAnimator = new CharacterAnimator(id, updatablePlayerInfo);
 
 
     this.update = function(updatePlayerInfo) {
@@ -32,6 +34,7 @@ function Player(remotePlayerInfo) {
         if (updatePlayerInfo.posY) {
             updatablePlayerInfo.posY = updatePlayerInfo.posY;
         }
+//        console.log( "UPDATE: id: " + id + "; posX: " + updatePlayerInfo.posX + "; posY: " + updatePlayerInfo.posY);
 //        updatablePlayerInfo = updatePlayerInfo;
         characterAnimator.update(updatePlayerInfo);
     };
@@ -59,7 +62,7 @@ function Player(remotePlayerInfo) {
         return updatablePlayerInfo.speed;
     }
     this.getId = function() {
-        return updatablePlayerInfo.id;
+        return id;
     }
     this.getUpdatablePlayerInfo = function() {
         return updatablePlayerInfo;

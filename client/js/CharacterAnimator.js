@@ -1,4 +1,4 @@
-function CharacterAnimator(initialPlayerInfo) {
+function CharacterAnimator(id, initialPlayerInfo) {
     //private
     var that = this;
     var spritelyObject;
@@ -15,7 +15,7 @@ function CharacterAnimator(initialPlayerInfo) {
     var init = true;
     var nonCyclicForewardAnimation = true;
 
-    var characterElement = createCharacterElement(initialPlayerInfo.id);
+    var characterElement = createCharacterElement(id);
 
     //public
     this.update = function(updateInfo) {
@@ -123,7 +123,7 @@ function CharacterAnimator(initialPlayerInfo) {
      */
     function createCharacterElement(id) {
         var elementId = 'character_' + id;
-        $('#stage').append('<div id="' + elementId + '" class="character"/>');
+        $('#stage').append('<div id="' + elementId + '" class="character"><div><a>' + id + '</a></div></div>');
         var characterElement = $('#' + elementId);
         return characterElement;
     }
