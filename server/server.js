@@ -2,8 +2,10 @@ var io = require('socket.io').listen(3000);
 
 var remotePlayers = [];
 io.set('log level', 1);
+io.set('close timeout', 6);
 io.set('heartbeat timeout', 6);
-io.set('heartbeat interval', 3);
+io.set('heartbeat interval', 4);
+io.set('polling duration', 3);
 io.sockets.on('connection', function(client) {
 
     console.log(">>>>> Client connected: " + client.id);
@@ -34,18 +36,7 @@ io.sockets.on('connection', function(client) {
         client.broadcast.emit('update_to_client', {playerInfo: data.playerInfo});
         for (i = 0; i < remotePlayers.length; i++) {
             if (remotePlayers[i].id == client.id) {
-                if (data.playerInfo.posX) {
-                    remotePlayers[i].posX = data.playerInfo.posX;
-                }
-                if (data.playerInfo.posY) {
-                    remotePlayers[i].posY = data.playerInfo.posY;
-                }
-                if (data.playerInfo.direction) {
-                    remotePlayers[i].direction = data.playerInfo.direction;
-                }
-                if (data.playerInfo.activity) {
-                    remotePlayers[i].activity = data.playerInfo.activity;
-                }
+                remotePlayers[i] = data.playerInfo;
                 break;
             }
         }

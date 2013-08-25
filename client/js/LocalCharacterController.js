@@ -11,23 +11,28 @@ function LocalCharacterController(playerArg) {
         sendUpdate = setSendUpdateFunc;
     }
 
-    this.startTicking = function( interval){
-        tickIntervalId = setInterval( tick, interval);
+    this.startTicking = function(interval) {
+        tickIntervalId = setInterval(tick, interval);
     };
-    
-    this.stopTicking = function(){
+
+    this.stopTicking = function() {
         clearInterval(tickIntervalId);
     };
-    
+
     this.getPlayer = function() {
         return player;
     }
-    
+
     /*
      * reacts on data from LocalInputReader and changes states of character and characterAnimator
      */
     this.onKeyEvent = function(keyPressed) {
         var updateInfo = new Object();
+        updateInfo.posX = player.getPosX();
+        updateInfo.posY = player.getPosY();
+        updateInfo.activity = player.getActivity();
+        updateInfo.direction = player.getDirection();
+
         //arrowkeys
         if (jQuery.inArray(keyPressed.keyCodeStr, LocalInputReader.arrowKeys)) {
             //activity: standing or walking?
@@ -42,8 +47,6 @@ function LocalCharacterController(playerArg) {
                 }
                 if (stand) {
                     updateInfo.activity = Player.activity.STAND;
-                    updateInfo.posX = player.getPosX();
-                    updateInfo.posY = player.getPosY();
                 }
             } else {
                 if (player.getActivity() != Player.activity.WALK) {
@@ -81,13 +84,11 @@ function LocalCharacterController(playerArg) {
                 updateInfo.direction = Player.direction.RIGHT;
             }
         }
-        //other keys
-        //..
 
         updateAll(updateInfo);
     };
 
-    function tick(){
+    function tick() {
         changePosition();
     }
 
@@ -128,11 +129,10 @@ function LocalCharacterController(playerArg) {
                     updateInfo.posY = player.getPosY() - player.getSpeed();
                     break;
             }
-            player.update( updateInfo);
-            //updateAll(updateInfo);
+            player.update(updateInfo);
         }
     }
-    
+
     function updateAll(updateInfo) {
         player.update(updateInfo);
         if (sendUpdate) {

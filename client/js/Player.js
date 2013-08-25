@@ -20,7 +20,6 @@ function Player(remotePlayerInfo) {
 
 
     this.update = function(updatePlayerInfo) {
-        characterAnimator.update(updatePlayerInfo);
         if (updatePlayerInfo.activity) {
             updatablePlayerInfo.activity = updatePlayerInfo.activity;
         }
@@ -33,12 +32,14 @@ function Player(remotePlayerInfo) {
         if (updatePlayerInfo.posY) {
             updatablePlayerInfo.posY = updatePlayerInfo.posY;
         }
+//        updatablePlayerInfo = updatePlayerInfo;
+        characterAnimator.update(updatePlayerInfo);
     };
-    
+
     /*
      * this is called when the player disconnects
      */
-    this.disappear = function(){
+    this.disappear = function() {
         characterAnimator.removeCharacterElement();
     };
 
@@ -57,10 +58,10 @@ function Player(remotePlayerInfo) {
     this.getSpeed = function() {
         return updatablePlayerInfo.speed;
     }
-    this.getId = function(){
+    this.getId = function() {
         return updatablePlayerInfo.id;
     }
-    this.getUpdatablePlayerInfo = function(){
+    this.getUpdatablePlayerInfo = function() {
         return updatablePlayerInfo;
     }
 }
