@@ -35,7 +35,7 @@ io.sockets.on('connection', function(client) {
         data.updateInfo.id = client.id;
         updatablePlayerInfos[client.id] = data.updateInfo;
         client.broadcast.emit('update_to_client', {playerId: client.id, updateInfo: updatablePlayerInfos[client.id]});
-        printUpdatablePlayerInfos(updatablePlayerInfos);
+//        printUpdatablePlayerInfos(updatablePlayerInfos);
     });
 
     // MESSAGE

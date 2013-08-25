@@ -43,9 +43,8 @@ function SocketHandler(address, gameArg) {
             var remoteControllers = game.getRemoteCharacterControllers();
             remoteControllers[data.playerId].getPlayer().update(data.updateInfo);
 
-            printRemotePlayers(game.getRemoteCharacterControllers());
+//            printRemotePlayers(game.getRemoteCharacterControllers());
 //            console.log("UPDATE: id: " + data.playerId + "; posX: " + data.updateInfo.posX + "; posY: " + data.updateInfo.posY);
-
         });
 
         // PLAYER_DISCONNECTED

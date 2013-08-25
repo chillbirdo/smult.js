@@ -3,6 +3,7 @@ function Player(remotePlayerId, remoteUpdatablePlayerInfo) {
     var id;
     var updatablePlayerInfo;
     var characterAnimator;
+    var walkSpeed = 3;
 
     if (!remoteUpdatablePlayerInfo || !remotePlayerId) {
         id = 'local';
@@ -10,8 +11,7 @@ function Player(remotePlayerId, remoteUpdatablePlayerInfo) {
             direction: Player.direction.UPRIGHT,
             activity: Player.activity.STAND,
             posX: 100,
-            posY: 100,
-            speed: 3
+            posY: 100
         };
     } else {
         id = remotePlayerId;
@@ -58,8 +58,8 @@ function Player(remotePlayerId, remoteUpdatablePlayerInfo) {
     this.getPosY = function() {
         return updatablePlayerInfo.posY;
     }
-    this.getSpeed = function() {
-        return updatablePlayerInfo.speed;
+    this.getWalkSpeed = function() {
+        return walkSpeed;
     }
     this.getId = function() {
         return id;

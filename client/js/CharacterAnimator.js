@@ -123,7 +123,7 @@ function CharacterAnimator(id, initialPlayerInfo) {
      */
     function createCharacterElement(id) {
         var elementId = 'character_' + id;
-        $('#stage').append('<div id="' + elementId + '" class="character"><div><a>' + id + '</a></div></div>');
+        $('#stage').append('<div id="' + elementId + '" class="character"><div id="nickname"><a>' + id + '</a></div></div>');
         var characterElement = $('#' + elementId);
         return characterElement;
     }
