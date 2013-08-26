@@ -19,8 +19,6 @@ function Player(playerName, remotePlayerId, remoteUpdatablePlayerInfo) {
         updatablePlayerInfo = remoteUpdatablePlayerInfo;
     }
 
-    console.log("NAME: lokookok " + name);
-
     characterAnimator = new CharacterAnimator(id, updatablePlayerInfo, name);
 
 

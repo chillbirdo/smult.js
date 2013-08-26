@@ -18,9 +18,6 @@ function CharacterAnimator(id, initialPlayerInfo, name) {
     var characterElement = createCharacterElement(name, id);
     var playerElement = characterElement.parent();
 
-    console.log("NAME:" + name);
-
-
     //public
     this.update = function(updateInfo) {
         if (updateInfo.activity) {
