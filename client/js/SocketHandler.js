@@ -1,4 +1,4 @@
-function SocketHandler(address, gameArg) {
+function SocketHandler(gameArg, onConnectedFunc) {
 
     var socket = io.connect('http://localhost:3000');
 //    var socket = io.connect('http://smultjs.eu01.aws.af.cm/');
@@ -15,26 +15,30 @@ function SocketHandler(address, gameArg) {
         // INIT_REQUEST
         /////////////////
         socket.on('init_request', function(data) {
-            console.log("set pushdata func");
-            game.setSendUpdateFunc(sendUpdateToServer);
+            console.log("got remotePlayers data!");
 
-            console.log("got remotePlayers data! these players are on the server: ");
+            game.setSendUpdateFunc(sendUpdateToServer);
             for (var id in data.updatablePlayerInfos) {
                 if (!game.getRemoteCharacterControllers()[id]) {
-                    game.addRemotePlayer(id, data.updatablePlayerInfos[id]);
+                    game.addRemotePlayer(id, data.updatablePlayerInfos[id], data.playerNames[id]);
                 } else {
                     console.log("UNEXPECTED: wanted to add player that already existed!");
                     return;
                 }
             }
-            /*ugly*/
-            socket.emit('init_response', {updatablePlayerInfo: game.getLocalCharacterController().getPlayer().getUpdatablePlayerInfo()});
+            onConnectedFunc();
+//            setTimeout(function() {
+//                onConnectedFunc();
+//            }, (3 * 1000));
+
+            var localPlayer = game.getLocalCharacterController().getPlayer();
+            socket.emit('init_response', {playerName: localPlayer.getName(), updatablePlayerInfo: localPlayer.getUpdatablePlayerInfo()});
         });
 
         // NEW_PLAYER_CONNECTED
         /////////////////////////
         socket.on('new_player_connected', function(data) {
-            game.addRemotePlayer(data.playerId, data.updatablePlayerInfo);
+            game.addRemotePlayer(data.playerId, data.updatablePlayerInfo, data.playerName);
         });
 
         // UPDATE_TO_CLIENT

@@ -1,8 +1,8 @@
-function Game() {
+function Game(localPlayerName, updatePlayerAmount) {
 
     var TICK_DELAY_MS = 10;
 
-    var localPlayer = new Player();
+    var localPlayer = new Player(localPlayerName);
     var localCharacterController = new LocalCharacterController(localPlayer);
     var localInputReader = new LocalInputReader(localCharacterController.onKeyEvent);
     var remoteCharacterControllers = {};
@@ -13,12 +13,13 @@ function Game() {
         localCharacterController.setSendUpdateFunc(sendUpdateFunc);
     }
 
-    this.addRemotePlayer = function(remotePlayerId, remoteUpdatablePlayerInfo) {
+    this.addRemotePlayer = function(remotePlayerId, remoteUpdatablePlayerInfo, remotePlayerName) {
         console.log("game: adding new player " + remotePlayerId);
-        var remotePlayer = new Player(remotePlayerId, remoteUpdatablePlayerInfo);
+        var remotePlayer = new Player(remotePlayerName, remotePlayerId, remoteUpdatablePlayerInfo);
         var remoteCharacterController = new RemoteCharacterController(remotePlayer);
         remoteCharacterControllers[remotePlayerId] = remoteCharacterController;
         remoteCharacterControllers[remotePlayerId].startTicking(TICK_DELAY_MS);
+        updatePlayerAmount(Object.keys(remoteCharacterControllers).length + 1);
         printRemotePlayers();
     };
 
@@ -26,6 +27,8 @@ function Game() {
         remoteCharacterControllers[remotePlayerId].getPlayer().disappear();
         remoteCharacterControllers[remotePlayerId].stopTicking();
         delete remoteCharacterControllers[remotePlayerId];
+        updatePlayerAmount(Object.keys(remoteCharacterControllers).length + 1);
+
         console.log("game: removed player " + remotePlayerId);
     };
 

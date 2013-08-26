@@ -1,6 +1,8 @@
 var io = require('socket.io').listen(3000);
 
 var updatablePlayerInfos = {};
+var playerNames = {};
+
 io.set('log level', 1);
 io.set('close timeout', 6);
 io.set('heartbeat timeout', 6);
@@ -10,8 +12,8 @@ io.sockets.on('connection', function(client) {
 
     console.log(">>>>> Client connected: " + client.id);
 
-    client.emit('init_request', {updatablePlayerInfos: updatablePlayerInfos});
-    console.log(">>>>> emitted remotePlayers to client " + client.id);
+    client.emit('init_request', {playerNames: playerNames, updatablePlayerInfos: updatablePlayerInfos});
+    console.log(">>>>> emitted players to client " + client.id);
 
     client.broadcast.emit('message', {msg: 'new client connected: ' + client.id});
     console.log(">>>>> emitted message to all clients except sender");
@@ -21,12 +23,13 @@ io.sockets.on('connection', function(client) {
     client.on('init_response', function(data) {
         if (!updatablePlayerInfos[client.id]) {
             updatablePlayerInfos[client.id] = data.updatablePlayerInfo;
+            playerNames[client.id] = data.playerName;
         } else {
             console.log("UNEXPECTED: wanted to add player that already existed!");
             return;
         }
         printUpdatablePlayerInfos(updatablePlayerInfos);
-        client.broadcast.emit('new_player_connected', {playerId: client.id, updatablePlayerInfo: data.updatablePlayerInfo});
+        client.broadcast.emit('new_player_connected', {playerId: client.id, updatablePlayerInfo: data.updatablePlayerInfo, playerName: data.playerName});
     });
 
     // UPDATE_TO_SERVER
@@ -52,6 +55,7 @@ io.sockets.on('connection', function(client) {
         console.log(">>>>> diconnected: " + client.id);
 
         delete updatablePlayerInfos[client.id];
+        delete playerNames[client.id];
         printUpdatablePlayerInfos(updatablePlayerInfos);
 
         io.sockets.emit('player_disconnected', {id: client.id});
@@ -64,6 +68,7 @@ function printUpdatablePlayerInfos(updatablePlayerInfos) {
     console.log("players: ");
     for (var id in updatablePlayerInfos) {
         var updatablePlayerInfo = updatablePlayerInfos[id];
-        console.log("id=" + id + "; posX=" + updatablePlayerInfo.posX + "; posY=" + updatablePlayerInfo.posY + "; direction=" + updatablePlayerInfo.direction + "; action=" + updatablePlayerInfo.activity + ";");
+        var name = playerNames[id];
+        console.log("name=" + name + "; id=" + id + "; posX=" + updatablePlayerInfo.posX + "; posY=" + updatablePlayerInfo.posY + "; direction=" + updatablePlayerInfo.direction + "; action=" + updatablePlayerInfo.activity + ";");
     }
 }

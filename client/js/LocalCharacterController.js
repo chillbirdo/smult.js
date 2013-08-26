@@ -12,7 +12,9 @@ function LocalCharacterController(playerArg) {
     }
 
     this.startTicking = function(interval) {
-        tickIntervalId = setInterval(tick, interval);
+        if (!tickIntervalId) {
+            tickIntervalId = setInterval(tick, interval);
+        }
     };
 
     this.stopTicking = function() {

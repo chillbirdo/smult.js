@@ -4,6 +4,28 @@
     border-width: 1px;
 }
 */
+#playersconnected {
+        background-color: #FFFFFF;
+        color: 000000;
+	height: 20px;
+	width: 100%;
+	font-size: 18px;
+	padding: 10px;
+	position: fixed;
+	bottom: 0;
+}
+
+.textmessage{
+    color: white;
+    background-color: #666666;
+    width: 400;
+    height: 65;
+    position: realtive;
+    margin-left:auto;
+    margin-right: auto;
+    text-align: center;
+}
+
 .arraowkeys{
     position: absolute;
     opacity: 0.5;

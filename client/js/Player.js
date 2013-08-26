@@ -1,9 +1,10 @@
-function Player(remotePlayerId, remoteUpdatablePlayerInfo) {
+function Player(playerName, remotePlayerId, remoteUpdatablePlayerInfo) {
 
     var id;
-    var updatablePlayerInfo;
+    var name = playerName;
     var characterAnimator;
     var walkSpeed = 3;
+    var updatablePlayerInfo;
 
     if (!remoteUpdatablePlayerInfo || !remotePlayerId) {
         id = 'local';
@@ -18,7 +19,9 @@ function Player(remotePlayerId, remoteUpdatablePlayerInfo) {
         updatablePlayerInfo = remoteUpdatablePlayerInfo;
     }
 
-    characterAnimator = new CharacterAnimator(id, updatablePlayerInfo);
+    console.log("NAME: lokookok " + name);
+
+    characterAnimator = new CharacterAnimator(id, updatablePlayerInfo, name);
 
 
     this.update = function(updatePlayerInfo) {
@@ -55,6 +58,10 @@ function Player(remotePlayerId, remoteUpdatablePlayerInfo) {
     this.getId = function() {
         return id;
     }
+    this.getName = function(){
+        return name;
+    }
+    
     this.getUpdatablePlayerInfo = function() {
         return updatablePlayerInfo;
     }
