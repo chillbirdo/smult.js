@@ -8,6 +8,7 @@
 
         <script src="js/CharacterAnimator.js" type="text/javascript"></script>
         <script src="js/Player.js" type="text/javascript"></script>
+        <script src="js/CharacterController.js" type="text/javascript"></script>
         <script src="js/LocalCharacterController.js" type="text/javascript"></script>
         <script src="js/RemoteCharacterController.js" type="text/javascript"></script>
         <script src="js/LocalInputReader.js" type="text/javascript"></script>
@@ -19,16 +20,21 @@
         <link rel="stylesheet" type="text/css" href="css/character.css"/>
     </head>
     <body>
-        <div id="stage">
-            <!-- characterAnimator adds characters here -->
-            <!--<img class="arraowkeys" src="img/arrowkeys.png" alt="use the arrowkeys to move your the avatar">-->
-
-<!--            <button style="position: absolute; top: 0; left: 0; border: 0;     width: 20%;
-                    height: 20%;
-                    " id="sendmessage" name="sendmessage"/>-->
-
-
+        <div id="namedialog" class="textmessage">
+            <a>Welcome to smult.js! Please enter your name:</a><BR><BR>
+            <form id="nameform">
+                <input id="nameinput" type="text" maxlength="10"/>
+                <input type="submit" value="GO!"/>
+            </form>
         </div>
+        <div id="loadingmessage" class="textmessage">
+            <BR><a>connecting to server ...</a>
+        </div>
+        <div id="stage">
+        </div>
+        <div id="playersconnected">connected players: <a id="playeramount"></a> .
+            <a href="" target="_blank">click here to add another one!</a></div>
+
         <a href="https://github.com/gilbertfritz/smult.js"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
     </body>
 </html>
