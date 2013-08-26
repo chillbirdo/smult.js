@@ -22,17 +22,10 @@ function Player(remotePlayerId, remoteUpdatablePlayerInfo) {
 
 
     this.update = function(updatePlayerInfo) {
-        if (updatePlayerInfo.activity) {
-            updatablePlayerInfo.activity = updatePlayerInfo.activity;
-        }
-        if (updatePlayerInfo.direction) {
-            updatablePlayerInfo.direction = updatePlayerInfo.direction;
-        }
-        if (updatePlayerInfo.posX) {
-            updatablePlayerInfo.posX = updatePlayerInfo.posX;
-        }
-        if (updatePlayerInfo.posY) {
-            updatablePlayerInfo.posY = updatePlayerInfo.posY;
+        for( var key in updatePlayerInfo){
+            if( updatePlayerInfo[key]){
+                updatablePlayerInfo[key] = updatePlayerInfo[key];
+            }
         }
 //        console.log( "UPDATE: id: " + id + "; posX: " + updatePlayerInfo.posX + "; posY: " + updatePlayerInfo.posY);
 //        updatablePlayerInfo = updatePlayerInfo;

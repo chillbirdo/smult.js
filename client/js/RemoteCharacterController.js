@@ -3,8 +3,6 @@ function RemoteCharacterController(playerArg) {
     var player = playerArg;
     var tickIntervalId;
     
-    var that = this;
-
     this.startTicking = function(interval) {
         tickIntervalId = setInterval(tick, interval);
     };
