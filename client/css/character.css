@@ -1,15 +1,22 @@
 #nickname {
     color:green;
     margin:auto;
+    font-size: 80%;
+    position: relative;
+    top:-220px;
 }
+
+.player {
+    position: absolute;
+    text-align: center;
+}
+
 .character {
     background: transparent url(../img/davie-boy.png) 0 0 no-repeat;
-    position: absolute;
 /*    left: 100;
     top: 100;*/
     width: 150px;
     height: 250px;
-    text-align: center;
 }
 .mirror{
     -moz-transform: scaleX(-1);

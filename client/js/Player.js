@@ -27,8 +27,6 @@ function Player(remotePlayerId, remoteUpdatablePlayerInfo) {
                 updatablePlayerInfo[key] = updatePlayerInfo[key];
             }
         }
-//        console.log( "UPDATE: id: " + id + "; posX: " + updatePlayerInfo.posX + "; posY: " + updatePlayerInfo.posY);
-//        updatablePlayerInfo = updatePlayerInfo;
         characterAnimator.update(updatePlayerInfo);
     };
 
@@ -36,7 +34,7 @@ function Player(remotePlayerId, remoteUpdatablePlayerInfo) {
      * this is called when the player disconnects
      */
     this.disappear = function() {
-        characterAnimator.removeCharacterElement();
+        characterAnimator.removePlayerElement();
     };
 
     this.getDirection = function() {
