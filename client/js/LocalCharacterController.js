@@ -1,44 +1,30 @@
-function LocalCharacterController(playerArg) {
+function LocalCharacterController(_player) {
+    this.setPlayer(_player);
 
-    var player = playerArg;
-    var tickIntervalId;
+    var that = this;
     var sendUpdate; /*pointer to remote-push function*/
 
     /*
      * Sockethandler calls that function 
      */
-    this.setSendUpdateFunc = function(setSendUpdateFunc) {
-        sendUpdate = setSendUpdateFunc;
-    }
-
-    this.startTicking = function(interval) {
-        if (!tickIntervalId) {
-            tickIntervalId = setInterval(tick, interval);
-        }
+    this.registerSendUpdateFunc = function(sendUpdateFunc) {
+        sendUpdate = sendUpdateFunc;
     };
-
-    this.stopTicking = function() {
-        clearInterval(tickIntervalId);
-    };
-
-    this.getPlayer = function() {
-        return player;
-    }
 
     /*
      * reacts on data from LocalInputReader and changes states of character and characterAnimator
      */
     this.onKeyEvent = function(keyPressed) {
         var updateInfo = new Object();
-        updateInfo.posX = player.getPosX();
-        updateInfo.posY = player.getPosY();
-        updateInfo.activity = player.getActivity();
-        updateInfo.direction = player.getDirection();
+        updateInfo.posX = that.getPlayer().getPosX();
+        updateInfo.posY = that.getPlayer().getPosY();
+        updateInfo.activity = that.getPlayer().getActivity();
+        updateInfo.direction = that.getPlayer().getDirection();
 
         //arrowkeys
         if (jQuery.inArray(keyPressed.keyCodeStr, LocalInputReader.arrowKeys)) {
             //activity: standing or walking?
-            if (keyPressed.type == "keyup") {
+            if (keyPressed.type === "keyup") {
                 var stand = true;
                 for (var arrowKey in LocalInputReader.arrowKeys) {
                     var val = LocalInputReader.arrowKeys[arrowKey];
@@ -51,7 +37,7 @@ function LocalCharacterController(playerArg) {
                     updateInfo.activity = Player.activity.STAND;
                 }
             } else {
-                if (player.getActivity() != Player.activity.WALK) {
+                if (that.getPlayer().getActivity() !== Player.activity.WALK) {
                     updateInfo.activity = Player.activity.WALK;
                 }
             }
@@ -87,58 +73,11 @@ function LocalCharacterController(playerArg) {
             }
         }
 
-        updateAll(updateInfo);
-    };
-
-    function tick() {
-        changePosition();
-    }
-
-    /*
-     * changes position of local character depending on its activity, direction and speed
-     * this function is called on every tick
-     */
-    function changePosition() {
-        if (player.getActivity() == Player.activity.WALK) {
-            var updateInfo = {};
-            switch (player.getDirection()) {
-                case Player.direction.UP:
-                    updateInfo.posY = player.getPosY() - player.getWalkSpeed();
-                    break;
-                case Player.direction.UPLEFT:
-                    updateInfo.posY = player.getPosY() - player.getWalkSpeed();
-                    updateInfo.posX = player.getPosX() - player.getWalkSpeed();
-                    break;
-                case Player.direction.LEFT:
-                    updateInfo.posX = player.getPosX() - player.getWalkSpeed();
-                    break;
-                case Player.direction.DOWNLEFT:
-                    updateInfo.posX = player.getPosX() - player.getWalkSpeed();
-                    updateInfo.posY = player.getPosY() + player.getWalkSpeed();
-                    break;
-                case Player.direction.DOWN:
-                    updateInfo.posY = player.getPosY() + player.getWalkSpeed();
-                    break;
-                case Player.direction.DOWNRIGHT:
-                    updateInfo.posY = player.getPosY() + player.getWalkSpeed();
-                    updateInfo.posX = player.getPosX() + player.getWalkSpeed();
-                    break;
-                case Player.direction.RIGHT:
-                    updateInfo.posX = player.getPosX() + player.getWalkSpeed();
-                    break;
-                case Player.direction.UPRIGHT:
-                    updateInfo.posX = player.getPosX() + player.getWalkSpeed();
-                    updateInfo.posY = player.getPosY() - player.getWalkSpeed();
-                    break;
-            }
-            player.update(updateInfo);
-        }
-    }
-
-    function updateAll(updateInfo) {
-        player.update(updateInfo);
+        that.getPlayer().update(updateInfo);
         if (sendUpdate) {
             sendUpdate(updateInfo);
         }
-    }
+    };
 }
+
+LocalCharacterController.prototype = new CharacterController();

@@ -33,13 +33,13 @@ function LocalInputReader(onKeyEvent) {
         keyPressed.type = event.type;
 
         var samekey = false;
-        if (event.type == "keydown") {
+        if (event.type === "keydown") {
             if (keyPressed[keyCodeStr]) {
                 samekey = true;
             } else {
                 keyPressed[keyCodeStr] = true;
             }
-        } else if (event.type == "keyup") {
+        } else if (event.type === "keyup") {
             keyPressed[keyCodeStr] = false;
         }
 

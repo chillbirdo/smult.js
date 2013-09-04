@@ -4,15 +4,42 @@ function Game(localPlayerName, updatePlayerAmount) {
 
     var localPlayer = new Player(localPlayerName);
     var localCharacterController = new LocalCharacterController(localPlayer);
-    var localInputReader = new LocalInputReader(localCharacterController.onKeyEvent);
     var remoteCharacterControllers = {};
 
     localCharacterController.startTicking(TICK_DELAY_MS);
 
-    this.setSendUpdateFunc = function(sendUpdateFunc) {
-        localCharacterController.setSendUpdateFunc(sendUpdateFunc);
-    }
+    /*
+     *  registers the method where changes of the state of the local player are pushed to 
+     */
+    this.registerSendUpdateFunc = function(sendUpdateFunc) {
+        localCharacterController.registerSendUpdateFunc(sendUpdateFunc);
+    };
 
+    /*
+     * returns the actual state of the local player.
+     * note that this is used for initialisation only, playerchanges are pushed via sendUpdateFunc
+     */
+    this.getLocalPlayerUpdatableInfos = function() {
+        return localCharacterController.getPlayer().getUpdatablePlayerInfo();
+    };
+    
+    /*
+     * returns the name of the local player
+     */
+    this.getLocalPlayerName = function() {
+        return localCharacterController.getPlayer().getName();
+    };
+
+    /*
+     * returns method that reacts on keyevents (userinput)
+     */
+    this.getLocalPlayerOnKeyEventMethod = function() {
+        return localCharacterController.onKeyEvent;
+    };
+
+    /*
+     * adds a remoteplayer
+     */
     this.addRemotePlayer = function(remotePlayerId, remoteUpdatablePlayerInfo, remotePlayerName) {
         console.log("game: adding new player " + remotePlayerId);
         var remotePlayer = new Player(remotePlayerName, remotePlayerId, remoteUpdatablePlayerInfo);
@@ -23,6 +50,9 @@ function Game(localPlayerName, updatePlayerAmount) {
         printRemotePlayers();
     };
 
+    /*
+     * removes a local player
+     */
     this.removeRemotePlayer = function(remotePlayerId) {
         remoteCharacterControllers[remotePlayerId].getPlayer().disappear();
         remoteCharacterControllers[remotePlayerId].stopTicking();
@@ -32,9 +62,6 @@ function Game(localPlayerName, updatePlayerAmount) {
         console.log("game: removed player " + remotePlayerId);
     };
 
-    this.getLocalCharacterController = function() {
-        return localCharacterController;
-    };
 
     this.getRemoteCharacterControllers = function() {
         return remoteCharacterControllers;

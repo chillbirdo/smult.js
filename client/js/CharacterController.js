@@ -1,14 +1,39 @@
-function CharacterController(){
-    this.tick = function() {
+function CharacterController() {
+
+    var player;
+    var tickIntervalId;
+
+    this.startTicking = function(interval) {
+        if (!tickIntervalId) {
+            tickIntervalId = setInterval(tick, interval);
+        }
+    };
+
+    this.stopTicking = function() {
+        clearInterval(tickIntervalId);
+    };
+
+    this.getPlayer = function() {
+        return player;
+    };
+
+    this.setPlayer = function(_player) {
+        player = _player;
+    };
+
+    /*
+     * code executed on every tick
+     */
+    function tick() {
         changePosition();
-    }
+    };
 
     /*
      * changes position of local character depending on its activity, direction and speed
      * this function is called on every tick
      */
     function changePosition() {
-        if (player.getActivity() == Player.activity.WALK) {
+        if (player.getActivity() === Player.activity.WALK) {
             var updateInfo = {};
             switch (player.getDirection()) {
                 case Player.direction.UP:
@@ -42,21 +67,7 @@ function CharacterController(){
             }
             player.update(updateInfo);
         }
-    }    
+    }
 }
-
-CharacterController.prototype.startTicking = function(interval) {
-        if (!this.tickIntervalId) {
-            this.tickIntervalId = setInterval(this.tick, interval);
-        }
-    };
-
-CharacterController.prototype.stopTicking = function() {
-        clearInterval(this.tickIntervalId);
-    };
-
-CharacterController.prototype.getPlayer = function() {
-        return this.player;
-    };
 
 

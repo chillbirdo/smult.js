@@ -41,14 +41,6 @@ io.sockets.on('connection', function(client) {
 //        printUpdatablePlayerInfos(updatablePlayerInfos);
     });
 
-    // MESSAGE
-    ////////////
-    client.on('message', function(message) {
-        console.log(">>>>> received message from client " + client.id);
-        client.broadcast.emit('message', {msg: client.id + " " + message});
-        console.log(">>>>> emitted message to all clients");
-    });
-
     // DISCONNECT
     ///////////////
     client.on('disconnect', function() {

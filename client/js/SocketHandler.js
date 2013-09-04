@@ -1,8 +1,8 @@
-function SocketHandler(gameArg, onConnectedFunc) {
+function SocketHandler(_game, onConnectedFunc) {
 
-//    var socket = io.connect('http://localhost:3000');
-    var socket = io.connect('http://smultjs.eu01.aws.af.cm/');
-    var game = gameArg;
+    var socket = io.connect('http://localhost:3000');
+//    var socket = io.connect('http://smultjs.eu01.aws.af.cm/');
+    var game = _game;
 
     socket.on('connect', function() {
 
@@ -17,7 +17,7 @@ function SocketHandler(gameArg, onConnectedFunc) {
         socket.on('init_request', function(data) {
             console.log("got remotePlayers data!");
 
-            game.setSendUpdateFunc(sendUpdateToServer);
+            game.registerSendUpdateFunc(sendUpdateToServer);
             for (var id in data.updatablePlayerInfos) {
                 if (!game.getRemoteCharacterControllers()[id]) {
                     game.addRemotePlayer(id, data.updatablePlayerInfos[id], data.playerNames[id]);
@@ -27,12 +27,8 @@ function SocketHandler(gameArg, onConnectedFunc) {
                 }
             }
             onConnectedFunc();
-//            setTimeout(function() {
-//                onConnectedFunc();
-//            }, (3 * 1000));
 
-            var localPlayer = game.getLocalCharacterController().getPlayer();
-            socket.emit('init_response', {playerName: localPlayer.getName(), updatablePlayerInfo: localPlayer.getUpdatablePlayerInfo()});
+            socket.emit('init_response', {playerName: game.getLocalPlayerName(), updatablePlayerInfo: game.getLocalPlayerUpdatableInfos()});
         });
 
         // NEW_PLAYER_CONNECTED
@@ -46,9 +42,6 @@ function SocketHandler(gameArg, onConnectedFunc) {
         socket.on('update_to_client', function(data) {
             var remoteControllers = game.getRemoteCharacterControllers();
             remoteControllers[data.playerId].getPlayer().update(data.updateInfo);
-
-//            printRemotePlayers(game.getRemoteCharacterControllers());
-//            console.log("UPDATE: id: " + data.playerId + "; posX: " + data.updateInfo.posX + "; posY: " + data.updateInfo.posY);
         });
 
         // PLAYER_DISCONNECTED
@@ -68,12 +61,7 @@ function SocketHandler(gameArg, onConnectedFunc) {
         }
     }
 
-
     function sendUpdateToServer(updateInfo) {
         socket.emit("update_to_server", {updateInfo: updateInfo});
     }
-
-    $('#sendmessage').click(function() {
-        socket.emit('message', 'hallo!');
-    });
 }

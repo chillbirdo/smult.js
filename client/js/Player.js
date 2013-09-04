@@ -11,8 +11,8 @@ function Player(playerName, remotePlayerId, remoteUpdatablePlayerInfo) {
         updatablePlayerInfo = {
             direction: Player.direction.UPRIGHT,
             activity: Player.activity.STAND,
-            posX: 100,
-            posY: 100
+            posX: Math.floor((Math.random() * (window.innerWidth - 150)) + 1),
+            posY: Math.floor((Math.random() * (window.innerHeight - 250)) + 1)
         };
     } else {
         id = remotePlayerId;
@@ -23,8 +23,8 @@ function Player(playerName, remotePlayerId, remoteUpdatablePlayerInfo) {
 
 
     this.update = function(updatePlayerInfo) {
-        for( var key in updatePlayerInfo){
-            if( updatePlayerInfo[key]){
+        for (var key in updatePlayerInfo) {
+            if (updatePlayerInfo[key]) {
                 updatablePlayerInfo[key] = updatePlayerInfo[key];
             }
         }
@@ -56,10 +56,10 @@ function Player(playerName, remotePlayerId, remoteUpdatablePlayerInfo) {
     this.getId = function() {
         return id;
     }
-    this.getName = function(){
+    this.getName = function() {
         return name;
     }
-    
+
     this.getUpdatablePlayerInfo = function() {
         return updatablePlayerInfo;
     }
