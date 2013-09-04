@@ -1,4 +1,4 @@
-function CharacterAnimator(id, initialPlayerInfo, name) {
+function CharacterAnimator(id, initialPlayerInfo, name, htmlHandler) {
     //private
     var that = this;
     var spritelyObject;
@@ -15,7 +15,7 @@ function CharacterAnimator(id, initialPlayerInfo, name) {
     var init = true;
     var nonCyclicForewardAnimation = true;
 
-    var characterElement = createCharacterElement(name, id);
+    var characterElement = htmlHandler.createCharacterElement(name, id);
     var playerElement = characterElement.parent();
 
     //public
@@ -37,11 +37,11 @@ function CharacterAnimator(id, initialPlayerInfo, name) {
     this.update(initialPlayerInfo);
 
     /*
-     * remove player's characterElement. this is called on a disconnect.
+     * remove player's characterElement
      */
     this.removePlayerElement = function() {
         playerElement.remove();
-    }
+    };
 
     /*
      * changes the character's position
@@ -108,24 +108,14 @@ function CharacterAnimator(id, initialPlayerInfo, name) {
         var perspective = perspArg;
         if (perspArg <= 5 && mirrored) {
             mirrored = false;
-            characterElement.removeClass("mirror");
+            htmlHandler.removeMirroringFromCharacter(characterElement);
         } else if (perspArg > 5) {
             perspective = 10 - perspArg;
             if (!mirrored) {
                 mirrored = true;
-                characterElement.addClass("mirror");
+                htmlHandler.addMirroringToCharacter(characterElement);
             }
         }
         spritelyObject.spState(perspective);
-    }
-
-    /*
-     * init CSS properties
-     */
-    function createCharacterElement(name, id) {
-        var elementId = 'character_' + id;
-        $('#stage').append('<div class="player"><div id="' + elementId + '" class="character"></div><div id="nickname"><a>' + name + '</a></div></div>');
-        var characterElement = $('#' + elementId);
-        return characterElement;
     }
 }

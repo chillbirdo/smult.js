@@ -5,7 +5,7 @@ function LocalInputReader(onKeyEvent) {
         38: LocalInputReader.arrowKeys.UPARROW,
         39: LocalInputReader.arrowKeys.RIGHTARROW,
         40: LocalInputReader.arrowKeys.DOWNARROW
-        //other keys..
+        //other keys here..
     };
 
     /*

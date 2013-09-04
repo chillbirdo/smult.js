@@ -1,4 +1,4 @@
-function SocketHandler(_game, onConnectedFunc) {
+function SocketHandler(_game) {
 
     var socket = io.connect('http://localhost:3000');
 //    var socket = io.connect('http://smultjs.eu01.aws.af.cm/');
@@ -16,13 +16,10 @@ function SocketHandler(_game, onConnectedFunc) {
         /////////////////
         socket.on('init_request', function(data) {
             console.log("got remotePlayers data!");
-
-            game.registerSendUpdateFunc(sendUpdateToServer);
             for (var id in data.updatablePlayerInfos) {
                 game.addRemotePlayer(id, data.updatablePlayerInfos[id], data.playerNames[id]);
             }
-            onConnectedFunc();
-
+            game.onConnected(sendUpdateToServer);
             socket.emit('init_response', {playerName: game.getLocalPlayerName(), updatablePlayerInfo: game.getLocalPlayerUpdatableInfos()});
         });
 

@@ -1,4 +1,4 @@
-function Player(playerName, remotePlayerId, remoteUpdatablePlayerInfo) {
+function Player(playerName, htmlHandler, remotePlayerId, remoteUpdatablePlayerInfo) {
 
     var id;
     var name = playerName;
@@ -19,7 +19,7 @@ function Player(playerName, remotePlayerId, remoteUpdatablePlayerInfo) {
         updatablePlayerInfo = remoteUpdatablePlayerInfo;
     }
 
-    characterAnimator = new CharacterAnimator(id, updatablePlayerInfo, name);
+    characterAnimator = new CharacterAnimator(id, updatablePlayerInfo, name, htmlHandler);
 
 
     this.update = function(updatePlayerInfo) {
