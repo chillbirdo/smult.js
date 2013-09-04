@@ -19,12 +19,7 @@ function SocketHandler(_game, onConnectedFunc) {
 
             game.registerSendUpdateFunc(sendUpdateToServer);
             for (var id in data.updatablePlayerInfos) {
-                if (!game.getRemoteCharacterControllers()[id]) {
-                    game.addRemotePlayer(id, data.updatablePlayerInfos[id], data.playerNames[id]);
-                } else {
-                    console.log("UNEXPECTED: wanted to add player that already existed!");
-                    return;
-                }
+                game.addRemotePlayer(id, data.updatablePlayerInfos[id], data.playerNames[id]);
             }
             onConnectedFunc();
 
@@ -40,8 +35,9 @@ function SocketHandler(_game, onConnectedFunc) {
         // UPDATE_TO_CLIENT
         /////////////////////
         socket.on('update_to_client', function(data) {
-            var remoteControllers = game.getRemoteCharacterControllers();
-            remoteControllers[data.playerId].getPlayer().update(data.updateInfo);
+//            var remoteControllers = game.getRemoteCharacterControllers();
+//            remoteControllers[data.playerId].getPlayer().update(data.updateInfo);
+            game.updateRemotePlayer(data.playerId, data.updateInfo);
         });
 
         // PLAYER_DISCONNECTED
