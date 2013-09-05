@@ -31,9 +31,6 @@ function Player(playerName, htmlHandler, remotePlayerId, remoteUpdatablePlayerIn
         characterAnimator.update(updatePlayerInfo);
     };
 
-    /*
-     * this is called when the player disconnects
-     */
     this.disappear = function() {
         characterAnimator.removePlayerElement();
     };

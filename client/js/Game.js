@@ -39,6 +39,9 @@ function Game(localPlayerName, htmlHandler) {
         return localCharacterController.onKeyEvent;
     };
 
+    /*
+     * interface to sockethandler: updates particular remoteplayer
+     */
     this.updateRemotePlayer = function(remotePlayerId, remoteUpdatablePlayerInfo) {
         remoteCharacterControllers[remotePlayerId].getPlayer().update(remoteUpdatablePlayerInfo);
     };

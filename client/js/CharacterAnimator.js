@@ -18,6 +18,7 @@ function CharacterAnimator(id, initialPlayerInfo, name, htmlHandler) {
     var characterElement = htmlHandler.createCharacterElement(name, id);
     var playerElement = characterElement.parent();
 
+
     //public
     this.update = function(updateInfo) {
         if (updateInfo.activity) {

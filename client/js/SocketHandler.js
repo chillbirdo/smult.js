@@ -45,15 +45,6 @@ function SocketHandler(_game) {
 
     });
 
-    function printRemotePlayers(remoteCharacterControllers) {
-        var i = 0;
-        console.log("players: ");
-        for (var id in remoteCharacterControllers) {
-            var player = remoteCharacterControllers[id].getPlayer();
-            console.log("id=" + id + "; posX=" + player.getPosX() + "; posY=" + player.getPosY() + "; direction=" + player.getDirection() + "; action=" + player.getActivity() + ";");
-        }
-    }
-
     function sendUpdateToServer(updateInfo) {
         socket.emit("update_to_server", {updateInfo: updateInfo});
     }
