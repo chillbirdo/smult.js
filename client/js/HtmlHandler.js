@@ -5,6 +5,11 @@ function HtmlHandler(onStartGame) {
     var nameInputElement = $('#nameinput');
     var playersConnectedElement = $('#playersconnected');
 
+    nameInputElement.focus();
+    loadingMessageElement.hide();
+    stageElement.hide();
+    playersConnectedElement.hide();
+
     $('#nameform').submit(function() {
         var localPlayerName = nameInputElement.val();
         if (localPlayerName.length >= 2) {
@@ -34,12 +39,13 @@ function HtmlHandler(onStartGame) {
         return characterElement;
     };
 
-    this.addMirroringToCharacter = function(characterElement){
+    this.addMirroringToCharacter = function(characterElement) {
         characterElement.addClass("mirror");
     };
-    
-    this.removeMirroringFromCharacter = function(characterElement){
+
+    this.removeMirroringFromCharacter = function(characterElement) {
         characterElement.removeClass("mirror");
     };
-};
+}
+;
 
