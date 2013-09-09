@@ -1,9 +1,13 @@
-#nickname {
-    color:green;
+.nickname {
+    color:red;
     margin:auto;
     font-size: 80%;
     position: relative;
     top:-220px;
+}
+
+#nickname_local{
+    color:green;
 }
 
 .player {

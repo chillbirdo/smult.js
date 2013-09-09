@@ -1,16 +1,21 @@
 function CharacterController() {
 
     var player;
-    var tickIntervalId;
+    var that = this;
+    
+    this.tickIntervalId = null;
 
     this.startTicking = function(interval) {
-        if (!tickIntervalId) {
-            tickIntervalId = setInterval(tick, interval);
+        console.log("startticking: " + player.getId());
+        if (that.tickIntervalId == null) {
+            console.log("STARTED!");
+            that.tickIntervalId = setInterval(tick, interval);
         }
     };
 
     this.stopTicking = function() {
         clearInterval(tickIntervalId);
+        that.tickIntervalId = null;
     };
 
     this.getPlayer = function() {
@@ -25,8 +30,11 @@ function CharacterController() {
      * code executed on every tick
      */
     function tick() {
+//        if (player.getId() != "local")
+//            console.log("ticking: " + player.getId());
         changePosition();
-    };
+    }
+    ;
 
     /*
      * changes position of local character depending on its activity, direction and speed

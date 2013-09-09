@@ -34,7 +34,8 @@ function HtmlHandler(onStartGame) {
 
     this.createCharacterElement = function(name, id) {
         var elementId = 'character_' + id;
-        $('#stage').append('<div class="player"><div id="' + elementId + '" class="character"></div><div id="nickname"><a>' + name + '</a></div></div>');
+        var nicknameId = 'nickname_' + id;
+        $('#stage').append('<div class="player"><div id="' + elementId + '" class="character"></div><div class="nickname" id="'+ nicknameId +'"><a>' + name + '</a></div></div>');
         var characterElement = $('#' + elementId);
         return characterElement;
     };

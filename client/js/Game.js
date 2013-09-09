@@ -52,11 +52,27 @@ function Game(localPlayerName, htmlHandler) {
             return;
         }
         console.log("game: adding new player " + remotePlayerId);
+
+        var i = 0;
+        for( key in remoteCharacterControllers){
+            i++;
+        }
+        console.log( "RemotePlayerAmount=" + i);
+
+        
         var remotePlayer = new Player(remotePlayerName, htmlHandler, remotePlayerId, remoteUpdatablePlayerInfo);
         var remoteCharacterController = new RemoteCharacterController(remotePlayer);
         remoteCharacterControllers[remotePlayerId] = remoteCharacterController;
         remoteCharacterControllers[remotePlayerId].startTicking(TICK_DELAY_MS);
         htmlHandler.updatePlayerAmount(Object.keys(remoteCharacterControllers).length + 1);
+    
+        var i = 0;
+        for( key in remoteCharacterControllers){
+            i++;
+        }
+        console.log( "RemotePlayerAmount=" + i);
+    
+        printRemotePlayers();
     };
 
     this.removeRemotePlayer = function(remotePlayerId) {
@@ -65,5 +81,16 @@ function Game(localPlayerName, htmlHandler) {
         delete remoteCharacterControllers[remotePlayerId];
         htmlHandler.updatePlayerAmount(Object.keys(remoteCharacterControllers).length + 1);
         console.log("game: removed player " + remotePlayerId);
+        
+        printRemotePlayers();
     };
+    
+    function printRemotePlayers(){
+        console.log("remoteplayers:");
+        for( key in remoteCharacterControllers){
+            controller = remoteCharacterControllers[key];
+            var player = controller.getPlayer();
+            console.log( "- key: " + key + "; id: " + player.getId() + "; name: " + player.getName());
+        }
+    }
 }
