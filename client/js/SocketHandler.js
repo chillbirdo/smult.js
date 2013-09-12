@@ -1,7 +1,6 @@
-function SocketHandler(_game) {
+function SocketHandler(_game, SERVER) {
 
-    var socket = io.connect('http://localhost:3000');
-//    var socket = io.connect('http://smultjs.eu01.aws.af.cm/');
+    var socket = io.connect(SERVER);
     var game = _game;
 
     socket.on('connect', function() {
