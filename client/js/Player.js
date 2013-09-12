@@ -29,6 +29,7 @@ function Player(playerName, htmlHandler, remotePlayerId, remoteUpdatablePlayerIn
             }
         }
         characterAnimator.update(updatePlayerInfo);
+//        console.log( this.toString());
     };
 
     this.disappear = function() {
@@ -43,23 +44,25 @@ function Player(playerName, htmlHandler, remotePlayerId, remoteUpdatablePlayerIn
     };
     this.getPosX = function() {
         return updatablePlayerInfo.posX;
-    }
+    };
     this.getPosY = function() {
         return updatablePlayerInfo.posY;
-    }
+    };
     this.getWalkSpeed = function() {
         return walkSpeed;
-    }
+    };
     this.getId = function() {
         return id;
-    }
+    };
     this.getName = function() {
         return name;
-    }
-
+    };
     this.getUpdatablePlayerInfo = function() {
         return updatablePlayerInfo;
-    }
+    };
+    this.toString = function() {
+        return "id: " + this.getId() + "; name: " + this.getName() + "; posX: " + this.getPosX() + "; posY: " + this.getPosY() + "; direction: " + this.getDirection() + "; activity: " + this.getActivity();
+    };
 }
 
 Player.direction = {

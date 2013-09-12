@@ -51,26 +51,15 @@ function Game(localPlayerName, htmlHandler) {
             console.log("UNEXPECTED: wanted to add player that already existed!");
             return;
         }
-        console.log("game: adding new player " + remotePlayerId);
+        console.log("game: adding new player " + remotePlayerId + " name: " + remotePlayerName);
 
-        var i = 0;
-        for( key in remoteCharacterControllers){
-            i++;
-        }
-        console.log( "RemotePlayerAmount=" + i);
-
-        
         var remotePlayer = new Player(remotePlayerName, htmlHandler, remotePlayerId, remoteUpdatablePlayerInfo);
+        console.log("SCHAU: id " + remotePlayer.getId() + " name: " + remotePlayer.getName());
+        
         var remoteCharacterController = new RemoteCharacterController(remotePlayer);
         remoteCharacterControllers[remotePlayerId] = remoteCharacterController;
         remoteCharacterControllers[remotePlayerId].startTicking(TICK_DELAY_MS);
         htmlHandler.updatePlayerAmount(Object.keys(remoteCharacterControllers).length + 1);
-    
-        var i = 0;
-        for( key in remoteCharacterControllers){
-            i++;
-        }
-        console.log( "RemotePlayerAmount=" + i);
     
         printRemotePlayers();
     };
@@ -90,7 +79,7 @@ function Game(localPlayerName, htmlHandler) {
         for( key in remoteCharacterControllers){
             controller = remoteCharacterControllers[key];
             var player = controller.getPlayer();
-            console.log( "- key: " + key + "; id: " + player.getId() + "; name: " + player.getName());
+            console.log( "- key: " + key + "; " + player.toString());
         }
     }
 }
