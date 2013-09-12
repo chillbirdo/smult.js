@@ -13,4 +13,3 @@ Here is a little diagramm, sketching the dataflow of the application. The most c
 
 <img src="http://gilber.vs120026.hl-users.com/wordpress/blogimages/dataflow.jpg"></img> 
 
-Please visit the <a href='https://github.com/gilbertfritz/smult.js'>GitHub page</a> to get the code.
