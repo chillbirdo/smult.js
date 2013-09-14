@@ -1,3 +1,9 @@
+.speechbubble{
+    background: transparent url(../img/speechbubble.png) 0 0 no-repeat;
+    width: 298px;
+    height: 70px;
+}
+
 .nickname {
     color:red;
     margin:auto;

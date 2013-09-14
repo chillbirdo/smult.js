@@ -1,52 +1,56 @@
-function HtmlHandler(onStartGame) {
+define([], function() {
 
-    var loadingMessageElement = $('#loadingmessage');
-    var stageElement = $('#stage');
-    var nameInputElement = $('#nameinput');
-    var playersConnectedElement = $('#playersconnected');
+    return function HtmlHandler(onStartGame) {
 
-    nameInputElement.focus();
-    loadingMessageElement.hide();
-    stageElement.hide();
-    playersConnectedElement.hide();
+        var loadingMessageElement = $('#loadingmessage');
+        var stageElement = $('#stage');
+        var nameInputElement = $('#nameinput');
+        var playersConnectedElement = $('#playersconnected');
 
-    $('#nameform').submit(function() {
-        var localPlayerName = nameInputElement.val();
-        if (localPlayerName.length >= 2) {
-            $('#namedialog').remove();
-            $('#loadingmessage').show();
-            onStartGame(localPlayerName);
-        } else {
-            alert("Your name is too short!");
-        }
-        return false;
-    });
-
-    this.onConnected = function() {
+        nameInputElement.focus();
         loadingMessageElement.hide();
-        stageElement.show();
-        playersConnectedElement.show();
-    };
+        stageElement.hide();
+        playersConnectedElement.hide();
 
-    this.updatePlayerAmount = function(playerAmount) {
-        $('#playeramount').html(playerAmount);
-    };
+        $('#nameform').submit(function() {
+            var localPlayerName = nameInputElement.val();
+            if (localPlayerName.length >= 2) {
+                $('#namedialog').remove();
+                $('#loadingmessage').show();
+                onStartGame(localPlayerName);
+            } else {
+                alert("Your name is too short!");
+            }
+            return false;
+        });
 
-    this.createCharacterElement = function(name, id) {
-        var elementId = 'character_' + id;
-        var nicknameId = 'nickname_' + id;
-        $('#stage').append('<div class="player"><div id="' + elementId + '" class="character"></div><div class="nickname" id="'+ nicknameId +'"><a>' + name + '</a></div></div>');
-        var characterElement = $('#' + elementId);
-        return characterElement;
-    };
+        this.onConnected = function() {
+            loadingMessageElement.hide();
+            stageElement.show();
+            playersConnectedElement.show();
+        };
 
-    this.addMirroringToCharacter = function(characterElement) {
-        characterElement.addClass("mirror");
-    };
+        this.updatePlayerAmount = function(playerAmount) {
+            $('#playeramount').html(playerAmount);
+        };
 
-    this.removeMirroringFromCharacter = function(characterElement) {
-        characterElement.removeClass("mirror");
+        this.createCharacterElement = function(name, id) {
+            var elementId = 'character_' + id;
+            var nicknameId = 'nickname_' + id;
+            var speechBubbleId = 'speechbubble_' + id;
+//        $('#stage').append('<div class="player"><div id="' + elementId + '" class="character"></div><div class="nickname" id="'+ nicknameId +'"><a>' + name + '</a></div><div class="speechbubble" id="' + speechBubbleId + '"></div></div>');
+            $('#stage').append('<div class="player"><div id="' + elementId + '" class="character"></div><div class="nickname" id="' + nicknameId + '"><a>' + name + '</a></div></div>');
+            var characterElement = $('#' + elementId);
+            return characterElement;
+        };
+
+        this.addMirroringToCharacter = function(characterElement) {
+            characterElement.addClass("mirror");
+        };
+
+        this.removeMirroringFromCharacter = function(characterElement) {
+            characterElement.removeClass("mirror");
+        };
     };
-}
-;
+});
 

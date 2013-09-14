@@ -1,85 +1,90 @@
-function Game(localPlayerName, htmlHandler) {
+define(['Player', 'LocalCharacterController', 'RemoteCharacterController'],
+        function(Player, LocalCharacterController, RemoteCharacterController) {
 
-    var TICK_DELAY_MS = 10;
+            function Game(localPlayerName, htmlHandler) {
 
-    var localPlayer = new Player(localPlayerName, htmlHandler);
-    var localCharacterController = new LocalCharacterController(localPlayer);
-    var remoteCharacterControllers = {};
+                var TICK_DELAY_MS = 10;
 
-    localCharacterController.startTicking(TICK_DELAY_MS);
+                var localPlayer = new Player(localPlayerName, htmlHandler);
+                var localCharacterController = new LocalCharacterController(localPlayer);
+                var remoteCharacterControllers = {};
 
-    /*
-     * returns the actual state of the local player.
-     * note that this is used for client-server-setup only, playerchanges are pushed via sendUpdateFunc
-     */
-    this.getLocalPlayerUpdatableInfos = function() {
-        return localCharacterController.getPlayer().getUpdatablePlayerInfo();
-    };
+                localCharacterController.startTicking(TICK_DELAY_MS);
 
-    /*
-     * returns the name of the local player
-     * note that this is used for client-server-setup only
-     */
-    this.getLocalPlayerName = function() {
-        return localCharacterController.getPlayer().getName();
-    };
+                /*
+                 * returns the actual state of the local player.
+                 * note that this is used for client-server-setup only, playerchanges are pushed via sendUpdateFunc
+                 */
+                this.getLocalPlayerUpdatableInfos = function() {
+                    return localCharacterController.getPlayer().getUpdatablePlayerInfo();
+                };
 
-    /*
-     *  interface to sockethandler: registers the method where changes of the state of the local player are pushed to 
-     */
-    this.onConnected = function(sendUpdateFunc) {
-        localCharacterController.registerSendUpdateFunc(sendUpdateFunc);
-        htmlHandler.onConnected();
-    };
+                /*
+                 * returns the name of the local player
+                 * note that this is used for client-server-setup only
+                 */
+                this.getLocalPlayerName = function() {
+                    return localCharacterController.getPlayer().getName();
+                };
 
-    /*
-     * interface to localinputreader: returns method that reacts on keyevents (userinput)
-     */
-    this.getLocalPlayerOnKeyEventMethod = function() {
-        return localCharacterController.onKeyEvent;
-    };
+                /*
+                 *  interface to sockethandler: registers the method where changes of the state of the local player are pushed to 
+                 */
+                this.onConnected = function(sendUpdateFunc) {
+                    localCharacterController.registerSendUpdateFunc(sendUpdateFunc);
+                    htmlHandler.onConnected();
+                };
 
-    /*
-     * interface to sockethandler: updates particular remoteplayer
-     */
-    this.updateRemotePlayer = function(remotePlayerId, remoteUpdatablePlayerInfo) {
-        remoteCharacterControllers[remotePlayerId].getPlayer().update(remoteUpdatablePlayerInfo);
-    };
+                /*
+                 * interface to localinputreader: returns method that reacts on keyevents (userinput)
+                 */
+                this.getLocalPlayerOnKeyEventMethod = function() {
+                    return localCharacterController.onKeyEvent;
+                };
 
-    this.addRemotePlayer = function(remotePlayerId, remoteUpdatablePlayerInfo, remotePlayerName) {
-        if (remoteCharacterControllers[remotePlayerId]) {
-            console.log("UNEXPECTED: wanted to add player that already existed!");
-            return;
-        }
-        console.log("game: adding new player " + remotePlayerId + " name: " + remotePlayerName);
+                /*
+                 * interface to sockethandler: updates particular remoteplayer
+                 */
+                this.updateRemotePlayer = function(remotePlayerId, remoteUpdatablePlayerInfo) {
+                    remoteCharacterControllers[remotePlayerId].getPlayer().update(remoteUpdatablePlayerInfo);
+                };
 
-        var remotePlayer = new Player(remotePlayerName, htmlHandler, remotePlayerId, remoteUpdatablePlayerInfo);
-        console.log("SCHAU: id " + remotePlayer.getId() + " name: " + remotePlayer.getName());
-        
-        var remoteCharacterController = new RemoteCharacterController(remotePlayer);
-        remoteCharacterControllers[remotePlayerId] = remoteCharacterController;
-        remoteCharacterControllers[remotePlayerId].startTicking(TICK_DELAY_MS);
-        htmlHandler.updatePlayerAmount(Object.keys(remoteCharacterControllers).length + 1);
-    
-        printRemotePlayers();
-    };
+                this.addRemotePlayer = function(remotePlayerId, remoteUpdatablePlayerInfo, remotePlayerName) {
+                    if (remoteCharacterControllers[remotePlayerId]) {
+                        console.log("UNEXPECTED: wanted to add player that already existed!");
+                        return;
+                    }
+                    console.log("game: adding new player " + remotePlayerId + " name: " + remotePlayerName);
 
-    this.removeRemotePlayer = function(remotePlayerId) {
-        remoteCharacterControllers[remotePlayerId].getPlayer().disappear();
-        remoteCharacterControllers[remotePlayerId].stopTicking();
-        delete remoteCharacterControllers[remotePlayerId];
-        htmlHandler.updatePlayerAmount(Object.keys(remoteCharacterControllers).length + 1);
-        console.log("game: removed player " + remotePlayerId);
-        
-        printRemotePlayers();
-    };
-    
-    function printRemotePlayers(){
-        console.log("remoteplayers:");
-        for( key in remoteCharacterControllers){
-            controller = remoteCharacterControllers[key];
-            var player = controller.getPlayer();
-            console.log( "- key: " + key + "; " + player.toString());
-        }
-    }
-}
+                    var remotePlayer = new Player(remotePlayerName, htmlHandler, remotePlayerId, remoteUpdatablePlayerInfo);
+                    console.log("SCHAU: id " + remotePlayer.getId() + " name: " + remotePlayer.getName());
+
+                    var remoteCharacterController = new RemoteCharacterController(remotePlayer);
+                    remoteCharacterControllers[remotePlayerId] = remoteCharacterController;
+                    remoteCharacterControllers[remotePlayerId].startTicking(TICK_DELAY_MS);
+                    htmlHandler.updatePlayerAmount(Object.keys(remoteCharacterControllers).length + 1);
+
+                    printRemotePlayers();
+                };
+
+                this.removeRemotePlayer = function(remotePlayerId) {
+                    remoteCharacterControllers[remotePlayerId].getPlayer().disappear();
+                    remoteCharacterControllers[remotePlayerId].stopTicking();
+                    delete remoteCharacterControllers[remotePlayerId];
+                    htmlHandler.updatePlayerAmount(Object.keys(remoteCharacterControllers).length + 1);
+                    console.log("game: removed player " + remotePlayerId);
+
+                    printRemotePlayers();
+                };
+
+                function printRemotePlayers() {
+                    console.log("remoteplayers:");
+                    for (key in remoteCharacterControllers) {
+                        controller = remoteCharacterControllers[key];
+                        var player = controller.getPlayer();
+                        console.log("- key: " + key + "; " + player.toString());
+                    }
+                }
+            };
+            return Game;
+        });

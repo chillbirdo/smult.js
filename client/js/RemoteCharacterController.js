@@ -1,5 +1,10 @@
-function RemoteCharacterController( _player) {
-    this.setPlayer(_player);
-}
+define(['CharacterController'], function(CharacterController) {
 
-RemoteCharacterController.prototype = new CharacterController();
+    function RemoteCharacterController(_player) {
+        this.setPlayer(_player);
+    };
+
+    RemoteCharacterController.prototype = new CharacterController();
+
+    return RemoteCharacterController;
+});
