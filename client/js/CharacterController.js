@@ -29,7 +29,7 @@ define(['Player'], function(Player) {
 
 
     CharacterController.prototype.stopTicking = function() {
-        clearInterval(tickIntervalId);
+        clearInterval(this.tickIntervalId);
         this.tickIntervalId = null;
     };
 

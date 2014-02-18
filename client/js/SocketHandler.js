@@ -1,16 +1,17 @@
 define([], function() {
 
-    var socketHandler = function SocketHandler(_game, SERVER) {
+    return function SocketHandler(_game, SERVER) {
 
         var socket = io.connect(SERVER);
         var game = _game;
+        var showSpeechBubble; /*function of HtmlHandler to show the chat text of a player */
 
         socket.on('connect', function() {
 
-            // MESSAGE
+            // LOG_MESSAGE
             ////////////
-            socket.on('message', function(data) {
-                console.log("Message: " + data.msg);
+            socket.on('log_message', function(data) {
+                console.log("log_message: " + data.msg);
             });
 
             // INIT_REQUEST
@@ -33,9 +34,13 @@ define([], function() {
             // UPDATE_TO_CLIENT
             /////////////////////
             socket.on('update_to_client', function(data) {
-//            var remoteControllers = game.getRemoteCharacterControllers();
-//            remoteControllers[data.playerId].getPlayer().update(data.updateInfo);
                 game.updateRemotePlayer(data.playerId, data.updateInfo);
+            });
+
+            // CHAT_MESSAGE
+            ////////////////////
+            socket.on('chat_message', function(data) {
+                showSpeechBubble( data.playerId, data.chatMessage);
             });
 
             // PLAYER_DISCONNECTED
@@ -49,6 +54,17 @@ define([], function() {
         function sendUpdateToServer(updateInfo) {
             socket.emit("update_to_server", {updateInfo: updateInfo});
         }
-    };
-    return socketHandler;
-});
+
+        //public
+        this.sendChatMessageToServer = function(chatMessage) {
+            console.log("sending chatmessage to server..");
+            socket.emit("chat_message", {chatMessage: chatMessage});
+        };
+
+        this.registerShowSpeechBubbleFunc = function(showSpeechBubbleFunc) {
+            showSpeechBubble = showSpeechBubbleFunc;
+        };
+
+    };//socketHandler
+
+});//require

@@ -9,7 +9,10 @@ require(['HtmlHandler', 'Game', 'LocalInputReader', 'SocketHandler'],
                 var game = new Game(localPlayerName, htmlHandler);
                 var localInputReader = new LocalInputReader(game.getLocalPlayerOnKeyEventMethod());
                 var socketHandler = new SocketHandler(game, SERVER);
-
+                
+                //needs to be cleaned up, see TODO.txt
+                socketHandler.registerShowSpeechBubbleFunc( htmlHandler.showSpeechBubble);
+                htmlHandler.registerSendChatMessageToServerFunc( socketHandler.sendChatMessageToServer);
                 htmlHandler.updatePlayerAmount(1);//initially set the playeramount
             }
         });

@@ -1,0 +1,14 @@
+Important Refactorings:
+
+- Split HtmlHander into two files: one handles the nameinput and loading screen,
+the other handles the game's HUD (number of clients connected, chat interaction).
+The HUD handler then is a member of game class, which saves the workarounds in main.js:
+register calls and updatePlayerAmount
+
+- js files could be divided into groups:
+view: HtmlHandler, HudHandler
+controller: CharacterController, LocalCharacterController, RemoteCharacterController
+model (changing): game: Game, Player
+model (game specific logic): network: SocketHandler
+model (loosely coubled logic): engine: LocalInputReader, CharacterAnimator
+    

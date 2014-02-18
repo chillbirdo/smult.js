@@ -73,7 +73,6 @@ define(['Player', 'LocalCharacterController', 'RemoteCharacterController'],
                     delete remoteCharacterControllers[remotePlayerId];
                     htmlHandler.updatePlayerAmount(Object.keys(remoteCharacterControllers).length + 1);
                     console.log("game: removed player " + remotePlayerId);
-
                     printRemotePlayers();
                 };
 

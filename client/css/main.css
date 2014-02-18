@@ -4,15 +4,11 @@
     border-width: 1px;
 }
 */
-#playersconnected {
-        background-color: #FFFFFF;
-        color: 000000;
-	height: 20px;
-	width: 100%;
-	font-size: 18px;
-	padding: 10px;
-	position: fixed;
-	bottom: 0;
+
+#nameinputformdiv{
+    width: 180px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .textmessage{
@@ -37,14 +33,58 @@
 }
 
 body {
-    background-color: #000000;
+    background-color: #FFFFFF;
 }
 #stage {
+    /*background: transparent url(../img/gras.jpg) 0 0 no-repeat;*/
     position: relative;
-    background-color: #000000;
+    background-color: #FFFFFF;
     width: 100%;
-    height: 100%;
+    height: 70%;
     margin-left: auto;
     margin-right: auto;
     z-index: -10000;
+    visibility: hidden;
 }
+
+.addclient{
+    width: 275px;
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.chatdiv{
+    width: 275px;
+    margin-left: auto;
+    margin-right: 0;
+    right: 0;
+}
+
+#playeramount{
+    font-size: 18px;
+}
+
+body, html{
+    height: 100%;
+}
+
+.container{
+    height: 100%;
+}
+
+#playersconnected {
+    /*visibility: hidden;*/
+    position: absolute;
+    bottom: 10px;
+}
+
+.footer{
+    position: absolute;
+    bottom: 0px;
+}
+
+#loadingmessage{
+    visibility: hidden;
+    text-align: center;
+}
+

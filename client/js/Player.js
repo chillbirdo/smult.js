@@ -11,10 +11,12 @@ define(['CharacterAnimator'], function(CharacterAnimator) {
         if (!remoteUpdatablePlayerInfo || !remotePlayerId) {
             id = 'local';
             updatablePlayerInfo = {
-                direction: Player.direction.UPRIGHT,
+                direction: Player.direction.DOWNRIGHT,
                 activity: Player.activity.STAND,
-                posX: Math.floor((Math.random() * (window.innerWidth - 150)) + 1),
-                posY: Math.floor((Math.random() * (window.innerHeight - 250)) + 1)
+                posX: Math.floor(Math.random()*((700 - 150)/2)),
+//                posY: Math.floor((window.outerHeight - 250)/2)
+//                posX: 20,
+                posY: -20
             };
         } else {
             id = remotePlayerId;
@@ -22,7 +24,6 @@ define(['CharacterAnimator'], function(CharacterAnimator) {
         }
 
         characterAnimator = new CharacterAnimator(id, updatablePlayerInfo, name, htmlHandler);
-
 
         this.update = function(updatePlayerInfo) {
             for (var key in updatePlayerInfo) {

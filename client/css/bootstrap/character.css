@@ -1,17 +1,7 @@
 .speechbubble{
-    visibility: hidden;
-    position: relative;
-    top: -260px;
-    left: 80px;
     background: transparent url(../img/speechbubble.png) 0 0 no-repeat;
     width: 298px;
     height: 70px;
-}
-
-.chattext {
-    position: relative;
-    left: -10px;
-    top: 15px;
 }
 
 .nickname {
@@ -19,8 +9,7 @@
     margin:auto;
     font-size: 80%;
     position: relative;
-    top: -15px;
-    left:-75px;
+    top:-220px;
 }
 
 #nickname_local{
@@ -34,12 +23,11 @@
 
 .character {
     background: transparent url(../img/davie-boy.png) 0 0 no-repeat;
-    /*    left: 100;
-        top: 100;*/
+/*    left: 100;
+    top: 100;*/
     width: 150px;
     height: 250px;
 }
-
 .mirror{
     -moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);

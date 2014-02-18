@@ -8,6 +8,7 @@ io.set('close timeout', 6);
 io.set('heartbeat timeout', 6);
 io.set('heartbeat interval', 4);
 io.set('polling duration', 3);
+
 io.sockets.on('connection', function(client) {
 
     console.log(">>>>> Client connected: " + client.id);
@@ -15,7 +16,7 @@ io.sockets.on('connection', function(client) {
     client.emit('init_request', {playerNames: playerNames, updatablePlayerInfos: updatablePlayerInfos});
     console.log(">>>>> emitted players to client " + client.id);
 
-    client.broadcast.emit('message', {msg: 'new client connected: ' + client.id});
+    client.broadcast.emit('log_message', {msg: 'new client connected: ' + client.id});
     console.log(">>>>> emitted message to all clients except sender");
 
     // INIT_RESPONSE
@@ -40,6 +41,13 @@ io.sockets.on('connection', function(client) {
         client.broadcast.emit('update_to_client', {playerId: client.id, updateInfo: updatablePlayerInfos[client.id]});
 //        printUpdatablePlayerInfos(updatablePlayerInfos);
     });
+
+    // CHAT_MESSAGE
+    /////////////////////
+    client.on('chat_message', function(data) {
+        client.broadcast.emit('chat_message', {playerId: client.id, chatMessage: data.chatMessage});
+    });
+
 
     // DISCONNECT
     ///////////////
