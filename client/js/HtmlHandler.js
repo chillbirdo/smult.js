@@ -15,6 +15,7 @@ define([], function() {
 
         var sendChatMessageToServer;
 
+        stageElement.hide();
         playersConnectedElement.hide();
         nameInputElement.focus();
         chatbutton.attr("disabled", false);
@@ -56,8 +57,9 @@ define([], function() {
         this.onConnected = function() {
             loadingMessageElement.hide();
             playersConnectedElement.show();
-            stageElement.css('visibility', 'visible');
+            stageElement.show();
             chatInputElement.focus();
+            $('.footer').css('position', 'absolute');
         };
 
         /*
