@@ -1,5 +1,5 @@
-//        var SERVER = 'http://smultjs.eu01.aws.af.cm/';
-var SERVER = 'http://localhost:3000';
+var SERVER = 'http://smultjs.eu01.aws.af.cm/';
+//var SERVER = 'http://localhost:3000';
 
 require(['HtmlHandler', 'Game', 'LocalInputReader', 'SocketHandler'],
         function(HtmlHandler, Game, LocalInputReader, SocketHandler) {
@@ -9,10 +9,10 @@ require(['HtmlHandler', 'Game', 'LocalInputReader', 'SocketHandler'],
                 var game = new Game(localPlayerName, htmlHandler);
                 var localInputReader = new LocalInputReader(game.getLocalPlayerOnKeyEventMethod());
                 var socketHandler = new SocketHandler(game, SERVER);
-                
+
                 //needs to be cleaned up, see TODO.txt
-                socketHandler.registerShowSpeechBubbleFunc( htmlHandler.showSpeechBubble);
-                htmlHandler.registerSendChatMessageToServerFunc( socketHandler.sendChatMessageToServer);
+                socketHandler.registerShowSpeechBubbleFunc(htmlHandler.showSpeechBubble);
+                htmlHandler.registerSendChatMessageToServerFunc(socketHandler.sendChatMessageToServer);
                 htmlHandler.updatePlayerAmount(1);//initially set the playeramount
             }
         });

@@ -19,7 +19,7 @@ define([], function() {
         nameInputElement.focus();
         chatbutton.attr("disabled", false);
 
-        if ($.browser.mozilla) {
+        if ($.browser.msie) {
             window.alert("This application does not support Microsoft Internet Explorer.");
         }
 

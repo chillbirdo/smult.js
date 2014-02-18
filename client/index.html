@@ -12,8 +12,8 @@
         <script src="js/vendor/jquery-1.8.2/jquery-1.8.2.min.js" type="text/javascript"></script>
         <script src="js/vendor/spritely-0.6/jquery.spritely-0.6.js" type="text/javascript"></script>
 
-        <script src="http://localhost:3000/socket.io/socket.io.js" type="text/javascript"></script>
-        <!--<script src="http://smultjs.eu01.aws.af.cm/socket.io/socket.io.js" type="text/javascript"></script>-->
+        <!--<script src="http://localhost:3000/socket.io/socket.io.js" type="text/javascript"></script>-->
+        <script src="http://smultjs.eu01.aws.af.cm/socket.io/socket.io.js" type="text/javascript"></script>
 
         <script data-main="js/main" src="js/vendor/require.js"></script>
 
@@ -65,9 +65,15 @@
                 </div>
             </div>
 
-            <div id="loadingmessage" class="alert alert-info">
-                Connecting to Node.js server. This could take some seconds...
-                <img src="img/loading.gif"/>
+            <div id="loadingmessage">
+                <div class="alert alert-info">
+                    <b>Connecting</b> to Node.js server. This could take some seconds...
+                    <img src="img/loading.gif"/>
+                </div>
+                <div class="alert alert-success">
+                    <b>TIP:</b> When connected, you can steer your character with the arrow keys of your keyboard.
+                    <img src="img/arrowkeys.png" width="50"/>
+                </div>
             </div>
 
             <div id="stage">
