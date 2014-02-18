@@ -1,5 +1,14 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Gilbert Fritz">
+
+        <title>Welcome to smult.js!</title>
+
         <script src="js/vendor/jquery-1.8.2/jquery-1.8.2.min.js" type="text/javascript"></script>
         <script src="js/vendor/spritely-0.6/jquery.spritely-0.6.js" type="text/javascript"></script>
 
@@ -8,25 +17,91 @@
 
         <script data-main="js/main" src="js/vendor/require.js"></script>
 
-        <link rel="stylesheet" type="text/css" href="css/main.css"/>
-        <link rel="stylesheet" type="text/css" href="css/character.css"/>
-    </head>
-    <body>
-        <div id="namedialog" class="textmessage">
-            <a>Welcome to smult.js! Please enter your name:</a><BR><BR>
-            <form id="nameform">
-                <input id="nameinput" type="text" maxlength="10"/>
-                <input type="submit" value="GO!"/>
-            </form>
-        </div>
-        <div id="loadingmessage" class="textmessage">
-            <BR><a>connecting to server ...</a>
-        </div>
-        <div id="stage">
-        </div>
-        <div id="playersconnected">connected players: <a id="playeramount"></a> .
-            <a href="" target="_blank">click here to add another one!</a></div>
 
-        <a href="https://github.com/gilbertfritz/smult.js"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
+        <!-- Bootstrap-->
+        <link href="css/bootstrap/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap/jumbotron-narrow.css" rel="stylesheet">
+        <!-- App -->
+        <link href="css/main.css" rel="stylesheet">
+        <link href="css/character.css" rel="stylesheet"/>
+
+    </head>
+
+    <body>
+
+        <div class="container">
+            <div class="header">
+                <ul class="nav nav-pills pull-right">
+                    <li class="active"><a href="#">Demo</a></li>
+                    <li><a href="https://github.com/gilbertfritz/smult.js">Github</a></li>
+                </ul>
+                <h3 class="text-muted">smult.js</h3>
+            </div>
+
+            <div class="jumbotron fadeout">
+                <h1>Do it. Now.</h1>
+                <p class="lead">Enter the innovative chatroom, where you can steer a character with your keyboard and meet other chatters that look exactly same as you!</p>
+                <br/>
+                <form id="nameform">
+                    <div id="nameinputformdiv" class="input-group">
+                        <input id="nameinput" class="form-control" maxlength="10" placeholder="your nickname" type="text" autocomplete="off">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="submit">Join!</button>
+                        </span>
+                    </div>
+                </form>
+                <!--<p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>-->
+            </div>                
+
+            <div class="row marketing fadeout">
+                <div class="col-lg-6">
+                    <h4>Bleeding Edge</h4>
+                    <p>Implemented using Node.js, socket.io, spritely, require.js, bootstrap. No canvas, just plain CSS.</p>
+                </div>
+
+                <div class="col-lg-6">
+                    <h4>Open Source</h4>
+                    <p>Download its <a href="https://github.com/gilbertfritz/smult.js">well documented source code</a> and use it as a starting point e.g. for your online game.</p>
+                </div>
+            </div>
+
+            <div id="loadingmessage" class="alert alert-info">
+                Connecting to Node.js server. This could take some seconds...
+                <img src="img/loading.gif"/>
+            </div>
+
+            <div id="stage">
+            </div>
+
+            <div id="playersconnected" class="row marketing fadeout">
+                <div class="col-lg-6">
+                    <div class="alert alert-warning addclient">Clients connected: <a id="playeramount"></a>&nbsp;&nbsp;&nbsp;
+                        <a href="" target="_blank">
+                            <button type="button" class="btn btn-success">Add Client!</button>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="alert alert-warning chatdiv">
+                        <form id="chatform">
+                            <div class="input-group">
+                                <input id="chatinput" class="form-control" maxlength="19" placeholder="type something lovely" type="text" autocomplete="off">
+                                <span class="input-group-btn">
+                                    <button id="chatbutton" class="btn btn-success" onclick="" type="submit">Say!</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>&copy; 2013 Gilbert Fritz, character graphics by Christian Herzog</p>
+            </div>
+
+        </div> <!-- /container -->
+
+        <!--<script data-main="js/main" src="js/vendor/require.js"></script>-->
     </body>
 </html>
