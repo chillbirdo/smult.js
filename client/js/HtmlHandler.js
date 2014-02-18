@@ -33,6 +33,7 @@ define([], function() {
                 localPlayerName = "noname";
             }
             loadingMessageElement.css('visibility', 'visible');
+            $('.footer').hide();
             $('.fadeout').hide();
             startGame(localPlayerName);
             return false;
@@ -59,6 +60,7 @@ define([], function() {
             playersConnectedElement.show();
             stageElement.show();
             chatInputElement.focus();
+            $('.footer').show();
             $('.footer').css('position', 'absolute');
         };
 
