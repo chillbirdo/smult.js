@@ -44,6 +44,9 @@ define([], function() {
          */
         $('#chatform').submit(function() {
             var chattext = chatInputElement.val();
+            if( chattext.length === 0)
+                    return false;
+            
             that.showSpeechBubble("local", chattext);
             chatInputElement.val("");
             chatbutton.attr("disabled", true);

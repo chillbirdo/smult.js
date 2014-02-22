@@ -1,3 +1,26 @@
+.player {
+    position: absolute;
+    text-align: center;
+}
+
+.character {
+    background: transparent url(../img/davie-boy.png) 0 0 no-repeat;
+    /*background: transparent url(../img/skeletton.png) 0 0 no-repeat;*/
+    /*    left: 100;
+        top: 100;*/
+    width: 150px;
+    height: 250px;
+}
+
+.mirror{
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
+
 .speechbubble{
     visibility: hidden;
     position: relative;
@@ -25,26 +48,4 @@
 
 #nickname_local{
     color:green;
-}
-
-.player {
-    position: absolute;
-    text-align: center;
-}
-
-.character {
-    background: transparent url(../img/davie-boy.png) 0 0 no-repeat;
-    /*    left: 100;
-        top: 100;*/
-    width: 150px;
-    height: 250px;
-}
-
-.mirror{
-    -moz-transform: scaleX(-1);
-    -o-transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-    filter: FlipH;
-    -ms-filter: "FlipH";
 }

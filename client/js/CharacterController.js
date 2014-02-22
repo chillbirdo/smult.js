@@ -79,6 +79,12 @@ define(['Player'], function(Player) {
                     updateInfo.posY = this.player.getPosY() - this.player.getWalkSpeed();
                     break;
             }
+            
+            if( updateInfo.posX < 0){
+                updateInfo.posX = 0;
+            }else if( updateInfo.posX > 700 - 150){
+                updateInfo.posX = 700 - 150;
+            }
             this.player.update(updateInfo);
         }
     };
