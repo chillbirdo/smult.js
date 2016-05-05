@@ -22,6 +22,7 @@ io.sockets.on('connection', function(client) {
     // INIT_RESPONSE
     //////////////////
     client.on('init_response', function(data) {
+        console.log("HEHAHAHAHAHAHAH");
         if (!updatablePlayerInfos[client.id]) {
             updatablePlayerInfos[client.id] = data.updatablePlayerInfo;
             playerNames[client.id] = data.playerName;

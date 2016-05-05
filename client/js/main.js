@@ -1,4 +1,4 @@
-var SERVER = 'http://smultjs.eu01.aws.af.cm/';
+var SERVER = 'https://young-stream-68847.herokuapp.com';
 //var SERVER = 'http://localhost:3000';
 
 require(['HtmlHandler', 'Game', 'LocalInputReader', 'SocketHandler'],
