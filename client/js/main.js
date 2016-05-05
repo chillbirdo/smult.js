@@ -16,14 +16,3 @@ require(['HtmlHandler', 'Game', 'LocalInputReader', 'SocketHandler'],
                 htmlHandler.updatePlayerAmount(1);//initially set the playeramount
             }
         });
-
-//        <script src="js/HtmlHandler.js" type="text/javascript"></script>
-//        <script src="js/CharacterAnimator.js" type="text/javascript"></script>
-//        <script src="js/Player.js" type="text/javascript"></script>
-//        <script src="js/CharacterController.js" type="text/javascript"></script>
-//        <script src="js/LocalCharacterController.js" type="text/javascript"></script>
-//        <script src="js/RemoteCharacterController.js" type="text/javascript"></script>
-//        <script src="js/LocalInputReader.js" type="text/javascript"></script>
-//        <script src="js/Game.js" type="text/javascript"></script>
-//        <script src="js/SocketHandler.js" type="text/javascript"></script>
-//        <script src="js/main.js" type="text/javascript"></script>

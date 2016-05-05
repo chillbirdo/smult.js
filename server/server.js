@@ -14,12 +14,6 @@ var io = require('socket.io')(http);
 var updatablePlayerInfos = {};
 var playerNames = {};
 
-//io.set('log level', 3);
-//io.set('close timeout', 6);
-//io.set('heartbeat timeout', 6);
-//io.set('heartbeat interval', 4);
-//io.set('polling duration', 3);
-
 io.sockets.on('connection', function(client) {
 
     console.log(">>>>> Client connected: " + cleanId(client.id));
