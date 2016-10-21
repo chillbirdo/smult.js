@@ -1,11 +1,9 @@
 define(['Player'], function(Player) {
 
 
-    function CharacterController() {
+    function CharacterController( _player) {
+        this.tickIntervalId = null;
     }
-
-    CharacterController.prototype.player;
-    CharacterController.prototype.tickIntervalId = null;
 
     CharacterController.prototype.startTicking = function(interval) {
         if (this.tickIntervalId === null) {
@@ -21,7 +19,7 @@ define(['Player'], function(Player) {
     };
 
     /*
-     * code executed on every tick
+     * code executed on each tick
      */
     CharacterController.prototype.tick = function() {
         this.changePosition();
@@ -44,7 +42,7 @@ define(['Player'], function(Player) {
 
     /*
      * changes position of local character depending on its activity, direction and speed
-     * this function is called on every tick
+     * this function is called on each tick
      */
     CharacterController.prototype.changePosition = function() {
         if (this.player.getActivity() === Player.activity.WALK) {

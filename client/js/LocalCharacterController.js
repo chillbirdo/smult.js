@@ -1,7 +1,7 @@
 define(['CharacterController', 'LocalInputReader', 'Player'], function(CharacterController, LocalInputReader, Player) {
 
     function LocalCharacterController(_player) {
-        this.setPlayer(_player);
+        this.player = _player;
 
         var that = this;
         var sendUpdate; /*pointer to remote-push function*/
